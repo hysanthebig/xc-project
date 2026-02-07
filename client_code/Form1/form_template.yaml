@@ -1,5 +1,15 @@
 components:
-- layout_properties: {slot: default}
+- components:
+  - layout_properties: {grid_position: 'OJLKSP,XAAXHB'}
+    name: card_1
+    properties: {role: card}
+    type: ColumnPanel
+  - event_bindings: {}
+    layout_properties: {grid_position: 'HELHVC,NYZSSV'}
+    name: button_1
+    properties: {text: import_csv_to_anvil_datatable}
+    type: Button
+  layout_properties: {slot: default}
   name: content_panel
   properties: {}
   type: ColumnPanel
@@ -7,6 +17,14 @@ components:
   name: navbar_links
   properties: {}
   type: FlowPanel
+- layout_properties: {slot: left-nav}
+  name: Sort
+  properties: {}
+  type: ColumnPanel
+- layout_properties: {slot: title}
+  name: column_panel_1
+  properties: {}
+  type: ColumnPanel
 container:
   properties: {html: '@theme:standard-page.html'}
   type: HtmlTemplate

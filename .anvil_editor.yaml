@@ -6,4 +6,6 @@ unique_ids:
     Form1: ZHOXB5MIZZE25PJ3HKYWH75XU5O3QIMF
   modules: {}
   scripts: {}
-  server_modules: {}
+  server_modules:
+    ServerModule1: '177049155527851378650300.85975'
+    data_loader: '177049263890613537740944.748577'

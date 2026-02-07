@@ -1,10 +1,66 @@
 allow_embedding: false
+db_schema:
+  datatable:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: Runner
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      name: Race
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: Placement
+      type: string
+    - admin_ui: {order: 4, width: 200}
+      name: Time
+      type: string
+    - admin_ui: {order: 5, width: 200}
+      name: Avr_splits
+      type: string
+    - admin_ui: {order: 6.75, width: 200}
+      name: Length
+      type: string
+    - admin_ui: {order: 5.5, width: 200}
+      name: Date
+      type: string
+    - admin_ui: {order: 8, width: 200}
+      name: Date_dt
+      type: string
+    - admin_ui: {order: 8.5, width: 200}
+      name: time_seconds
+      type: number
+    - admin_ui: {order: 2.5, width: 200}
+      name: Grade
+      type: number
+    server: full
+    title: datatable
+  files:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: path
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      name: file
+      type: media
+    - admin_ui: {order: 2, width: 200}
+      name: file_version
+      type: string
+    server: full
+    title: Files
 name: Material Design 1
 package_name: Material_Design_1
 runtime_options:
   client_version: '3'
   legacy_features: {bootstrap3: true, class_names: true}
-  server_spec: {base: python310-minimal}
+  server_spec: {base: python310-standard}
   version: 3
-services: []
+services:
+- client_config: {}
+  server_config: {auto_create_missing_columns: true}
+  source: /runtime/services/tables.yml
+- client_config: {}
+  server_config: {file_table: files}
+  source: /runtime/services/anvil/files.yml
 startup_form: Form1
