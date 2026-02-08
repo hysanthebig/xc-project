@@ -17,10 +17,11 @@ import pandas as pd
 #   print("Hello, " + name + "!")
 #   return 42
 #
-f = app_tables.datatable.search()
-df = pd.DataFrame(f)
+
 
 @anvil.server.callable
 def get_data_rows():
+  f = app_tables.datatable.search()
+  df = pd.DataFrame(f)
   return df.to_dict(orient='records')
 
