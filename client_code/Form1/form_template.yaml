@@ -52,9 +52,10 @@ components:
     - {data_key: column_8, id: EEWMJF, title: Length}
     - {data_key: column_9, id: WYAHFQ, title: Seconds}
     - {data_key: column_10, id: IAPJXQ, title: Date_dt}
+    role: overflow-scroll
     rows_per_page: 200
   type: DataGrid
 container:
-  properties: {html: '@theme:standard-page.html'}
+  properties: {html: '@theme:standard-page.html', role: overflow-scroll}
   type: HtmlTemplate
 is_package: true
