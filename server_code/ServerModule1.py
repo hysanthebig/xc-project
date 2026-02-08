@@ -17,25 +17,27 @@ import pandas as pd
 #   print("Hello, " + name + "!")
 #   return 42
 #
-
-
+rows = app_tables.datatable.search()
+data_list = []
+for r in rows:
+  data_list.append({
+    "Runner": r["Runner"],
+    "Race": r["Race"],
+    "Grade": r["Grade"],
+    "Placement":r["Placement"],
+    "Date":r["Date"],
+    "Date_dt":r["Date_dt"],
+    "Time":r["Time"],
+    "time_seconds":r["time_seconds"],
+    "Length":r["Length"],
+    "Avr_splits":r['Avr_splits']
+  })
+df = pd.DataFrame(data_list)
+print(df)
 @anvil.server.callable
 def get_data_rows():
-  records = []
-  for row in app_tables.datatable.search():
-    records.append({
-      'Runner': row['Runner'],
-      'Race': row['Race'],
-      'Grade': row['Grade'],
-      'Placement': row['Placement'],
-      'Time': row['Time'],
-      'Avr_splits': row['Avr_splits'],
-      'Date': row['Date'],
-      'Length': row['Length'],
-      'Date_dt': row['Date_dt'],
-      'time_seconds': row['time_seconds']
-    })
-  return records
+  result = df.to_dict(orient="records")
+  return result
 
 @anvil.server.callable
 def one_of_runner():
