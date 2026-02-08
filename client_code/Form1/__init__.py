@@ -12,25 +12,24 @@ class Form1(Form1Template):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
-    self.repeating_panel_1.items = [
-      {'Runner':'Waylon'}]
+    datatable = anvil.server.call('get_data_rows')
+    self.repeating_panel_1.items = datatable
+
 
     # Any code you write here will run before the form opens.
 
 
 
   
-def main_data_display(self):
-  self.repeating_panel_1.items = anvil.server.call('get_data_rows')
-    
-def data_refresh(self,**event_args):
-  self.main_data_display()
-    
-@handle("import_csv_to_datattable", "click")
-def import_csv_to_datattable_click(self, **event_args):
-    anvil.server.call('import_csf_to_table')
-  
-@handle("refreshtest", "click")
-def refreshtest_click(self, **event_args):
-    data_refresh(self,**event_args)
+  def main_data_display(self):
+    self.repeating_panel_1.items = anvil.server.call('get_data_rows')
+      
 
+      
+  @handle("import_csv_to_datattable", "click")
+  def import_csv_to_datattable_click(self, **event_args):
+      anvil.server.call('import_csf_to_table')
+    
+  @handle("refreshtest", "click")
+  def refreshtest_click(self, **event_args):
+    self.main_data_display()
