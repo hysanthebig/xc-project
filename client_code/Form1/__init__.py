@@ -18,11 +18,11 @@ class Form1(Form1Template):
     self.runner_checkbox = []
     total_runner = anvil.server.call('one_of_runner')  
     checkmark_runner = CheckBox(text='All Runners',checked=True)
-    self.flow_panel_1.add_component(checkmark_runner)
+    self.flow_panel_runner.add_component(checkmark_runner)
 
     for runner in total_runner:
       checkmark_runner = CheckBox(text=runner,checked=False)
-      self.flow_panel_1.add_component(checkmark_runner)
+      self.flow_panel_runner.add_component(checkmark_runner)
       self.runner_checkbox.append(checkmark_runner)
 
 
@@ -32,13 +32,14 @@ class Form1(Form1Template):
 
 
   def main_data_display(self):
-    data =  anvil.server.call('get_data_rows')
-    self.repeating_panel_1.items =data
+    selected_runners = self.get_selected_runners()
+    filtered_df = anvil.server.call('filter',selected_runners)
+    self.repeating_panel_1.items = filtered_df
 
   def get_selected_runners(self):
     selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked]
-    if selected_runners == None:
-      return
+    if selected_runners is None:
+      return None
     else:
       return selected_runners
 
@@ -50,5 +51,4 @@ class Form1(Form1Template):
   @handle("refreshtest", "click")
   def refreshtest_click(self, **event_args):
     self.main_data_display()
-    print(self.get_selected_runners())
 

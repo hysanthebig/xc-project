@@ -20,7 +20,6 @@ class RowTemplate2(RowTemplate2Template):
       self.lbl_avr_splits.text = str(self.item.get('Avr_splits', ''))
       self.lbl_date.text = str(self.item.get('Date', ''))
       self.lbl_length.text = str(self.item.get('Length', ''))
-      self.lbl_date_dt.text = str(self.item.get('Date_dt', ''))
-      self.lbl_time_seconds.text = str(self.item.get('time_seconds', ''))
+
 
     # Any code you write here will run before the form opens.

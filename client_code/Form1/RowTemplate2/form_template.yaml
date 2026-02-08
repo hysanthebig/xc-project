@@ -19,25 +19,17 @@ components:
   name: lbl_avr_splits
   properties: {}
   type: Label
-- layout_properties: {column: UKXXVT}
-  name: lbl_date
-  properties: {}
-  type: Label
 - layout_properties: {column: EEWMJF}
   name: lbl_length
-  properties: {}
-  type: Label
-- layout_properties: {column: WYAHFQ}
-  name: lbl_time_seconds
-  properties: {}
+  properties: {align: center, icon_align: right}
   type: Label
 - layout_properties: {column: JKSDUP}
   name: lbl_runner
   properties: {text: ''}
   type: Label
-- layout_properties: {column: IAPJXQ}
-  name: lbl_date_dt
-  properties: {}
+- layout_properties: {column: UKXXVT}
+  name: lbl_date
+  properties: {align: left}
   type: Label
 container: {type: DataRowPanel}
 is_package: true

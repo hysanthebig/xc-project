@@ -7,15 +7,15 @@ components:
 - components:
   - components:
     - layout_properties: {grid_position: 'IKJPWO,LTFPZQ'}
-      name: flow_panel_1
+      name: flow_panel_runner
       properties: {visible: true}
+      type: FlowPanel
+    - layout_properties: {grid_position: 'IKJPWO,RVIRLJ'}
+      name: flow_panel_races
+      properties: {}
       type: FlowPanel
     layout_properties: {grid_position: 'OJKFSJ,WNCXML'}
     name: column_panel_2
-    properties: {}
-    type: ColumnPanel
-  - layout_properties: {grid_position: 'OJKFSJ,BGCIIT'}
-    name: column_panel_3
     properties: {}
     type: ColumnPanel
   layout_properties: {slot: left-nav}
@@ -48,10 +48,8 @@ components:
     - {data_key: column_4, id: XVTTKK, title: Placement}
     - {data_key: column_5, id: YYSHCG, title: Time}
     - {data_key: column_6, id: DOEHRN, title: Avr-Splits}
-    - {data_key: column_7, expand: false, id: UKXXVT, title: Date, width: 35.50567626953125}
-    - {data_key: column_8, id: EEWMJF, title: Length}
-    - {data_key: column_9, id: WYAHFQ, title: Seconds}
-    - {data_key: column_10, id: IAPJXQ, title: Date_dt}
+    - {data_key: column_7, expand: false, id: UKXXVT, title: 'Date    ', width: 35.50567626953125}
+    - {data_key: column_8, id: EEWMJF, title: '        Length'}
     role: overflow-scroll
     rows_per_page: 200
     wrap_on: never
