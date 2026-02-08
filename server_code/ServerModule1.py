@@ -19,11 +19,30 @@ import pandas as pd
 #
 f = app_tables.datatable.search()
 df = pd.DataFrame(f)
-df.columns = df.columns.astype(str)
-df=df.head()
+
 
 
 @anvil.server.callable
 def get_data_rows():
-  return df.to_dict(orient='records')
+  records = []
+  for row in df.to_dict(orient='records'):
+    records.append({
+      'Runner': row['Runner'],
+      'Race': row['Race'],
+      'Grade': row['Grade'],
+      'Placement': row['Placement'],
+      'Time': row['Time'],
+      'Avr_splits': row['Avr_splits'],
+      'Date': row['Date'],
+      'Length': row['Length'],
+      'Date_dt': row['Date_dt'],
+      'time_seconds': row['time_seconds']
+    })
+  return records
 
+@anvil.server.callable
+def one_of_runner():
+  rows = app_tables.datatable.search()
+  one_runner = sorted(set(row['Runner'] for row in rows))
+  return(one_runner)
+  
