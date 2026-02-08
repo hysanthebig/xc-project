@@ -13,7 +13,7 @@ class Form1(Form1Template):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
-
+   
 
     self.runner_checkbox = []
     total_runner = anvil.server.call('one_of_runner')  

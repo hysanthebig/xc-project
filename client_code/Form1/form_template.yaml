@@ -54,8 +54,9 @@ components:
     - {data_key: column_10, id: IAPJXQ, title: Date_dt}
     role: overflow-scroll
     rows_per_page: 200
+    wrap_on: mobile
   type: DataGrid
 container:
-  properties: {html: '@theme:standard-page.html', role: overflow-scroll}
+  properties: {html: '@theme:standard-page.html', role: null}
   type: HtmlTemplate
 is_package: true
