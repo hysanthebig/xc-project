@@ -26,7 +26,8 @@ components:
   properties: {}
   type: ColumnPanel
 - components:
-  - layout_properties: {slot: footer}
+  - data_bindings: []
+    layout_properties: {slot: footer}
     name: repeating_panel_1
     properties: {item_template: Form1.ItemTemplate1}
     type: RepeatingPanel
