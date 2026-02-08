@@ -1,26 +1,5 @@
 components:
-- components:
-  - components:
-    - name: repeating_panel_1
-      properties: {item_template: Form1.RowTemplate2}
-      type: RepeatingPanel
-    data_bindings: []
-    layout_properties: {}
-    name: data_grid_1
-    properties:
-      columns:
-      - {data_key: column_1, id: JKSDUP, title: Runner}
-      - {data_key: column_2, id: VJQQOR, title: Race}
-      - {data_key: column_3, id: OJLQEN, title: Grade}
-      - {data_key: column_4, id: XVTTKK, title: Placement}
-      - {data_key: column_5, id: YYSHCG, title: Time}
-      - {data_key: column_6, id: DOEHRN, title: Avr-Splits}
-      - {data_key: column_7, id: UKXXVT, title: Date}
-      - {data_key: column_8, id: EEWMJF, title: Length}
-      - {data_key: column_9, id: WYAHFQ, title: Seconds}
-      - {data_key: column_10, id: IAPJXQ, title: Date_dt}
-      rows_per_page: 200
-    type: DataGrid
+- components: []
   layout_properties: {slot: nav-right}
   name: navbar_links
   properties: {}
@@ -53,6 +32,27 @@ components:
   name: column_panel_1
   properties: {}
   type: ColumnPanel
+- components:
+  - name: repeating_panel_1
+    properties: {item_template: Form1.RowTemplate2}
+    type: RepeatingPanel
+  data_bindings: []
+  layout_properties: {slot: default}
+  name: data_grid_1
+  properties:
+    columns:
+    - {data_key: column_1, id: JKSDUP, title: Runner}
+    - {data_key: column_2, id: VJQQOR, title: Race}
+    - {data_key: column_3, id: OJLQEN, title: Grade}
+    - {data_key: column_4, id: XVTTKK, title: Placement}
+    - {data_key: column_5, id: YYSHCG, title: Time}
+    - {data_key: column_6, id: DOEHRN, title: Avr-Splits}
+    - {data_key: column_7, id: UKXXVT, title: Date}
+    - {data_key: column_8, id: EEWMJF, title: Length}
+    - {data_key: column_9, id: WYAHFQ, title: Seconds}
+    - {data_key: column_10, id: IAPJXQ, title: Date_dt}
+    rows_per_page: 200
+  type: DataGrid
 container:
   properties: {html: '@theme:standard-page.html'}
   type: HtmlTemplate
