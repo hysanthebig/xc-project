@@ -1,3 +1,43 @@
-components: []
+components:
+- layout_properties: {column: VJQQOR}
+  name: lbl_race
+  properties: {}
+  type: Label
+- layout_properties: {column: OJLQEN}
+  name: lbl_grade
+  properties: {}
+  type: Label
+- layout_properties: {column: XVTTKK}
+  name: lbl_placement
+  properties: {}
+  type: Label
+- layout_properties: {column: YYSHCG}
+  name: lbl_time
+  properties: {}
+  type: Label
+- layout_properties: {column: DOEHRN}
+  name: lbl_avr_splits
+  properties: {}
+  type: Label
+- layout_properties: {column: UKXXVT}
+  name: lbl_date
+  properties: {}
+  type: Label
+- layout_properties: {column: EEWMJF}
+  name: lbl_length
+  properties: {}
+  type: Label
+- layout_properties: {column: WYAHFQ}
+  name: lbl_time_seconds
+  properties: {}
+  type: Label
+- layout_properties: {column: JKSDUP}
+  name: lbl_runner
+  properties: {text: ''}
+  type: Label
+- layout_properties: {column: IAPJXQ}
+  name: lbl_date_dt
+  properties: {}
+  type: Label
 container: {type: DataRowPanel}
 is_package: true

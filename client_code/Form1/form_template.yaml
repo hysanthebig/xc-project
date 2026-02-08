@@ -42,6 +42,7 @@ components:
     - {data_key: column_7, id: UKXXVT, title: Column 7}
     - {data_key: column_8, id: EEWMJF, title: Column 8}
     - {data_key: column_9, id: WYAHFQ, title: Column 9}
+    - {data_key: column_10, id: IAPJXQ, title: Column 10}
   type: DataGrid
 container:
   properties: {html: '@theme:standard-page.html'}

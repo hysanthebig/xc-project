@@ -12,8 +12,7 @@ class Form1(Form1Template):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
-    datatable = anvil.server.call('get_data_rows')
-    self.repeating_panel_1.items = datatable
+
 
 
     # Any code you write here will run before the form opens.
@@ -22,7 +21,9 @@ class Form1(Form1Template):
 
   
   def main_data_display(self):
-    self.repeating_panel_1.items = anvil.server.call('get_data_rows')
+    data =  anvil.server.call('get_data_rows')
+    print(data)
+    self.repeating_panel_1.items =data
       
 
       
