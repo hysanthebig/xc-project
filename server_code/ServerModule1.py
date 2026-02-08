@@ -17,15 +17,12 @@ import pandas as pd
 #   print("Hello, " + name + "!")
 #   return 42
 #
-f = app_tables.datatable.search()
-df = pd.DataFrame(f)
-
 
 
 @anvil.server.callable
 def get_data_rows():
   records = []
-  for row in df.to_dict(orient='records'):
+  for row in app_tables.datatable.search():
     records.append({
       'Runner': row['Runner'],
       'Race': row['Race'],
