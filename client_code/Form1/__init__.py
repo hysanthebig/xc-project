@@ -20,17 +20,17 @@ class Form1(Form1Template):
 
 
   
-  def main_data_display(self):
-    self.repeating_panel_1.items = anvil.server.call('get_data_rows')
+def main_data_display(self):
+  self.repeating_panel_1.items = anvil.server.call('get_data_rows')
     
-  def data_refresh(self,**event_args):
-    self.main_data_display()
+def data_refresh(self,**event_args):
+  self.main_data_display()
     
-  @handle("import_csv_to_datattable", "click")
-  def import_csv_to_datattable_click(self, **event_args):
-      anvil.server.call('import_csf_to_table')
+@handle("import_csv_to_datattable", "click")
+def import_csv_to_datattable_click(self, **event_args):
+    anvil.server.call('import_csf_to_table')
   
-  @handle("refreshtest", "click")
-  def refreshtest_click(self, **event_args):
-      data_refresh(self,**event_args)
+@handle("refreshtest", "click")
+def refreshtest_click(self, **event_args):
+    data_refresh(self,**event_args)
 

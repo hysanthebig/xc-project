@@ -12,3 +12,4 @@ class ItemTemplate1(ItemTemplate1Template):
     self.init_components(**properties)
 
     # Any code you write here will run before the form opens.
+

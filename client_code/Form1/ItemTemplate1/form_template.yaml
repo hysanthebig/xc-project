@@ -1,9 +1,10 @@
 components:
-- layout_properties: {grid_position: 'EKDSOG,PDHRXK'}
+- layout_properties: {grid_position: 'JYOYWR,EWIURW'}
   name: data_row_panel_1
-  properties: {}
+  properties: {bold: true, italic: false}
   type: DataRowPanel
 container:
+  event_bindings: {}
   properties: {visible: true, wrap_on: never}
   type: ColumnPanel
 is_package: true
