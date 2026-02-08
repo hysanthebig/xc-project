@@ -794,6 +794,11 @@ textarea.anvil-component[disabled] {
   font-size: 16px;
 }
 
+.scroll-x {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
 /* Shadow values taken from 
 https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-material-design-elevations
 */

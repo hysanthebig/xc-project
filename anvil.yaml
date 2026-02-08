@@ -49,8 +49,8 @@ db_schema:
       type: string
     server: full
     title: Files
-name: Material Design 1
-package_name: Material_Design_1
+name: XC project
+package_name: XC_project
 runtime_options:
   client_version: '3'
   legacy_features: {bootstrap3: true, class_names: true}

@@ -147,8 +147,6 @@ color_scheme:
       - {color: '#616161', name: Secondary 700}
       name: Grey
 roles:
-- components: [Label, Link]
-  name: text
 - components: [Label]
   name: subheading
 - components: [Label]
@@ -175,5 +173,4 @@ roles:
   name: secondary-color
 - components: [TextBox]
   name: dense
-- components: [Link]
-  name: selected
+- {name: overflow-scroll}

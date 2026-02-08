@@ -33,7 +33,8 @@ components:
   properties: {}
   type: ColumnPanel
 - components:
-  - name: repeating_panel_1
+  - layout_properties: {pinned: false}
+    name: repeating_panel_1
     properties: {item_template: Form1.RowTemplate2}
     type: RepeatingPanel
   data_bindings: []

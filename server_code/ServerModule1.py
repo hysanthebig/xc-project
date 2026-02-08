@@ -33,7 +33,7 @@ for r in rows:
     "Avr_splits":r['Avr_splits']
   })
 df = pd.DataFrame(data_list)
-print(df)
+
 @anvil.server.callable
 def get_data_rows():
   result = df.to_dict(orient="records")
