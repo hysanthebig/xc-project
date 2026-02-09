@@ -6,6 +6,7 @@ from anvil.tables import app_tables
 import anvil.server
 import pandas as pd
 import plotly.graph_objects as go
+import numpy as np
 # This is a server module. It runs on the Anvil server,
 # rather than in the user's browser.
 #
@@ -39,6 +40,17 @@ def table_into_df(rows):
   return(df)
 
 df = table_into_df(rows)
+
+def seconds_to_mintunes(seconds):
+  mint = int(seconds // 60)
+  sec = round(seconds % 60, 1)
+  if sec < 10:
+    sec = f"0{sec}"
+  time = f"{mint}:{sec}"
+  return (time)
+
+
+  
 
 @anvil.server.callable
 def one_of_item():
@@ -122,13 +134,23 @@ def graphing_module(runnerlist,gradelist):
   filitered_df = filitered_df.drop(columns =['Race','Placement'])
   grouped = filitered_df.groupby("Runner")
   plot = go.Figure()
+  all_y = []
   for runner, runner_df in grouped:
-    runner_df = runner_df.sort_values('Date_dt')
     runner_df["Date_dt"] = pd.to_datetime(runner_df["Date_dt"])
+    runner_df = runner_df.sort_values('Date_dt')
+    
     xvalues = runner_df["Date_dt"]
     yvalues = runner_df['time_seconds']
+    all_y.extend(yvalues.tolist())
     trace = go.Scatter(x=xvalues,y=yvalues,mode="lines+markers",name=runner)
     plot.add_trace(trace)
+  plot.update_xaxes(
+    title="Date",
+    tickformat="%,/%d/%y"  # or "%b %d" for Month Day
+  )
+  plot.update_yaxes(
+    ticktext = [seconds_to_mintunes(s) for s in all_y]
+  )
   return plot
 
   
