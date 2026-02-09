@@ -62,5 +62,5 @@ class Form1(Form1Template):
 
   @handle("sorting_picker", "change")
   def sorting_picker_change(self, **event_args):
-    self.
+    self.main_data_display()
 
