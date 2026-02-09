@@ -53,9 +53,8 @@ class Form1(Form1Template):
     #####sidescroll
 
     # Any code you write here will run before the form opens.
-
-
-
+    
+  
 
   def main_data_display(self):
     selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked]
@@ -76,6 +75,7 @@ class Form1(Form1Template):
     selected_grades = [checkmark_grade.text for checkmark_grade in self.grade_checkbox if checkmark_grade.checked]
     self.data_grid_1.visible = False
     self.plot_1.figure = anvil.server.call('graphing_module',selected_runners,selected_grades)
+    
     
   @handle("import_csv_to_datattable", "click")
   def import_csv_to_datattable_click(self, **event_args):

@@ -135,22 +135,27 @@ def graphing_module(runnerlist,gradelist):
   grouped = filitered_df.groupby("Runner")
   plot = go.Figure()
   all_y = []
+  
   for runner, runner_df in grouped:
     runner_df["Date_dt"] = pd.to_datetime(runner_df["Date_dt"])
     runner_df = runner_df.sort_values('Date_dt')
-    
-    xvalues = runner_df["Date_dt"]
-    yvalues = runner_df['time_seconds']
+    hover_text = [seconds_to_mintunes(s) for s in runner_df['time_seconds']]
+    xvalues = runner_df["Date_dt"].dt.tz_localize(None).dt.to_pydatetime()
+    yvalues = runner_df['time_seconds']/60
     all_y.extend(yvalues.tolist())
-    trace = go.Scatter(x=xvalues,y=yvalues,mode="lines+markers",name=runner)
+    trace = go.Scatter(x=xvalues,y=yvalues,mode="lines+markers",name=runner,text = hover_text)
     plot.add_trace(trace)
   plot.update_xaxes(
     title="Date",
-    tickformat="%,/%d/%y"  # or "%b %d" for Month Day
+    tickformat="%m/%d/%y"  # or "%b %d" for Month Day
   )
-  plot.update_yaxes(
-    ticktext = [seconds_to_mintunes(s) for s in all_y]
-  )
+  plot.update_yaxes(ticksuffix = ":00")
+  for trace in plot.data:
+    trace.text = [f"Time: {seconds_to_mintunes(s)}" for s in trace.y * 60]  # or original seconds
+    trace.hovertemplate = "Race Date %{x}<br>%{text}"
+
+  
+  
   return plot
 
   
