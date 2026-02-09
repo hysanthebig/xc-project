@@ -129,7 +129,10 @@ def graphing_module(runnerlist,gradelist):
     yvalues = runner_df['time_seconds']
     trace = go.Scatter(x=xvalues,y=yvalues,mode="lines+markers",name=runner)
     plot.add_trace(trace)
-  return plot
+  fig = go.Figure()
+fig.add_trace(go.Scatter(x=[1,2,3], y=[10,20,15], mode="lines+markers", name="Test"))
+return fig
+  return fig
 
   
   
