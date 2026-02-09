@@ -803,6 +803,10 @@ textarea.anvil-component[disabled] {
   min-width: min-content;
 }
 
+.anvil-role-min-width-repeater {
+  min-width: 300px; /* Adjust the desired minimum width as needed */
+}
+
 /* Shadow values taken from 
 https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-material-design-elevations
 */
