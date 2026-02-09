@@ -173,4 +173,4 @@ roles:
   name: secondary-color
 - components: [TextBox]
   name: dense
-- {name: horizontal-scroll}
+- {name: wide}

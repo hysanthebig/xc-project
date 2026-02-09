@@ -793,7 +793,10 @@ textarea.anvil-component[disabled] {
 .checkbox, .radio {
   font-size: 16px;
 }
-
+.anvil-role-wide .repeating_columns {
+  overflow-x: auto;
+  flex-wrap: nowrap;
+}
 /* Shadow values taken from 
 https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-material-design-elevations
 */
