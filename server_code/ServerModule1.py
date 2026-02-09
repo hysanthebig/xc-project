@@ -63,11 +63,12 @@ def one_of_item():
   return(one_runner,one_race, one_grade,one_length)
 
 @anvil.server.callable
-def filter(sort_by,runnerlist,racelist,gradelist):
+def filter(sort_by,runnerlist,racelist,gradelist,lengthlist):
   readmask = pd.Series(True, index=df.index)
   runner_mask = pd.Series(False, index=df.index)
   race_mask = pd.Series(False, index=df.index)
   grade_mask = pd.Series(False, index = df.index)
+  length_mask = pd.Series(False,index = df.index)
   ####################Filter#######################
   for runner in runnerlist[0:]:
     col_data = df["Runner"].astype(str)
@@ -90,7 +91,14 @@ def filter(sort_by,runnerlist,racelist,gradelist):
   if len(gradelist) == 0:
     grade_mask = pd.Series(True,index =df.index)
 
-  readmask = readmask & runner_mask & race_mask & grade_mask
+  for length in lengthlist[0:]:
+    col_data = df["Length"].astype(str)
+    single_mask = col_data.str.contains(length.strip(),case = False)
+    length_mask = length_mask | single_mask
+  if len(lengthlist) == 0:
+    length_mask = pd.Series(True,index =df.index)
+
+  readmask = readmask & runner_mask & race_mask & grade_mask & length_mask
 
   df_filtered = df.loc[readmask]
   df_filtered = df_filtered.sort_values(by=[sort_by])
@@ -116,7 +124,7 @@ def pr_display(lengthlist,gradelist):
     grade_mask = pd.Series(True,index =df.index)
     
   for length in lengthlist[0:]:
-    col_data = pr_rows["Grade"].astype(str)
+    col_data = pr_rows["Length"].astype(str)
     single_mask = col_data.str.contains(length.strip(),case = False)
     length_mask = length_mask | single_mask
   if len(lengthlist) == 0:
@@ -128,8 +136,8 @@ def pr_display(lengthlist,gradelist):
   pr_rows = pr_rows.drop(columns = ['time_seconds','Date_dt']).to_dict(orient="records")
   return(pr_rows)
 @anvil.server.callable
-def graphing_module(runnerlist,gradelist):
-  filitered_df = filter("Runner",runnerlist,[],gradelist)
+def graphing_module(runnerlist,gradelist,lengthlist):
+  filitered_df = filter("Runner",runnerlist,[],gradelist,lengthlist)
   filitered_df = table_into_df(filitered_df)
   filitered_df = filitered_df.drop(columns =['Race','Placement'])
   grouped = filitered_df.groupby("Runner")
@@ -154,8 +162,6 @@ def graphing_module(runnerlist,gradelist):
     trace.text = [f"Time: {seconds_to_mintunes(s)}" for s in trace.y * 60]  # or original seconds
     trace.hovertemplate = "Race Date %{x}<br>%{text}"
 
-  
-  
   return plot
 
   

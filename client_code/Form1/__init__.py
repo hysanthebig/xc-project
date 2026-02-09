@@ -20,6 +20,7 @@ class Form1(Form1Template):
     self.runner_checkbox = []
     self.race_checkbox = []
     self.grade_checkbox = []
+    self.length_checkbox = []
     total_runner,total_races,total_grades,total_lengths = anvil.server.call('one_of_item')  
     checkmark_runner = CheckBox(text='All Runners',checked=True)
     self.flow_panel_runner.add_component(checkmark_runner)
@@ -36,17 +37,10 @@ class Form1(Form1Template):
       checkmark_grade = CheckBox(text=grade,checked=False)
       self.flow_panel_grade.add_component(checkmark_grade)
       self.grade_checkbox.append(checkmark_grade)
-  ###############################PR UI###################################
-    self.pr_length_checkbox = []
-    self.pr_grade_checkbox = []
-    for grade in total_grades:
-      checkmark_pr_grade = CheckBox(text=grade,checked=False)
-      self.flow_pr_grade.add_component(checkmark_pr_grade)
-      self.pr_grade_checkbox.append(checkmark_pr_grade)
     for length in total_lengths:
-      checkmark_pr_length = CheckBox(text=length,checked=False)
-      self.flow_pr_length.add_component(checkmark_pr_length)
-      self.pr_length_checkbox.append(checkmark_pr_length)
+      checkmark_length = CheckBox(text=length,checked=False)
+      self.flow_length.add_component(checkmark_length)
+      self.length_checkbox.append(checkmark_length)
 
     self.sorting_picker.items = [("Name","Runner"),("Time","time_seconds"),("Date","Date_dt")]
 
@@ -60,21 +54,23 @@ class Form1(Form1Template):
     selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked]
     selected_races = [checkmark_race.text for checkmark_race in self.race_checkbox if checkmark_race.checked]
     selected_grades = [checkmark_grade.text for checkmark_grade in self.grade_checkbox if checkmark_grade.checked]
+    selected_lengths = [checkmark_length.text for checkmark_length in self.length_checkbox if checkmark_length.checked]
     sort_by = self.sorting_picker.selected_value
-    filtered_df = anvil.server.call('filter',sort_by,selected_runners,selected_races,selected_grades)
+    filtered_df = anvil.server.call('filter',sort_by,selected_runners,selected_races,selected_grades,selected_lengths)
     self.repeating_panel_1.items = filtered_df
 
 
   def pr_screen_display(self):
-    selected_lengths = [checkmark_pr_length.text for checkmark_pr_length in self.pr_length_checkbox if checkmark_pr_length.checked]
-    selected_grades = [checkmark_pr_grade.text for checkmark_pr_grade in self.pr_grade_checkbox if checkmark_pr_grade.checked]
+    selected_lengths = [checkmark_length.text for checkmark_length in self.length_checkbox if checkmark_length.checked]
+    selected_grades = [checkmark_grade.text for checkmark_grade in self.pr_grade_checkbox if checkmark_grade.checked]
     self.repeating_panel_1.items = anvil.server.call("pr_display",selected_lengths,selected_grades)
 
   def graphing_module_display(self):
     selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked]
     selected_grades = [checkmark_grade.text for checkmark_grade in self.grade_checkbox if checkmark_grade.checked]
+    selected_lengths = [checkmark_length.text for checkmark_length in self.length_checkbox if checkmark_length.checked]
     self.data_grid_1.visible = False
-    self.plot_1.figure = anvil.server.call('graphing_module',selected_runners,selected_grades)
+    self.plot_1.figure = anvil.server.call('graphing_module',selected_runners,selected_grades,selected_lengths)
     
     
   @handle("import_csv_to_datattable", "click")
@@ -90,20 +86,32 @@ class Form1(Form1Template):
     elif self.select_plot.selected is True:
       self.graphing_module_display()
 
+
+  def all_picker_on(self):
+    self.flow_panel_grade.visible = True
+    self.flow_panel_races.visible = True
+    self.flow_panel_runner.visible = True
+    self.flow_length.visible = True
+
+    
   @handle("sorting_picker", "change")
   def sorting_picker_change(self, **event_args):
     self.main_data_display()
 
   @handle("select_pr", "clicked")
   def select_pr_clicked(self, **event_args):
-    self.column_panel_2.visible = False
-    self.column_panel_3.visible = True
+    self.all_picker_on()
+    self.flow_panel_races
     self.sorting_picker.visible = False
 
 
   @handle("select_search", "clicked")
   def select_search_clicked(self, **event_args):
-    self.column_panel_2.visible = True
-    self.column_panel_3.visible = False
+    self.all_picker_on()
     self.sorting_picker.visible = True
+
+  @handle("select_plot", "clicked")
+  def select_plot_clicked(self, **event_args):
+    self.all_picker_on()
+    self.flow_panel_races.visible = False
 
