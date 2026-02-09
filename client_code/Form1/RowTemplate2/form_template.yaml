@@ -21,7 +21,7 @@ components:
   type: Label
 - layout_properties: {column: EEWMJF}
   name: lbl_length
-  properties: {align: center, icon_align: right}
+  properties: {align: left, icon_align: right}
   type: Label
 - layout_properties: {column: JKSDUP}
   name: lbl_runner

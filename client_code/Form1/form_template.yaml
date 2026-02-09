@@ -63,13 +63,13 @@ components:
   name: data_grid_1
   properties:
     columns:
-    - {data_key: column_1, id: JKSDUP, title: Runner}
-    - {data_key: column_2, id: VJQQOR, title: Race}
-    - {data_key: column_3, id: OJLQEN, title: Grade}
-    - {data_key: column_4, id: XVTTKK, title: Placement}
-    - {data_key: column_5, id: YYSHCG, title: Time}
-    - {data_key: column_6, id: DOEHRN, title: Avr-Splits}
-    - {data_key: column_7, expand: false, id: UKXXVT, title: 'Date    ', width: 35.50567626953125}
+    - {data_key: column_1, expand: false, id: JKSDUP, title: Runner, width: 160}
+    - {data_key: column_2, expand: false, id: VJQQOR, title: Race, width: 182}
+    - {data_key: column_3, expand: false, id: OJLQEN, title: Grade, width: 157}
+    - {data_key: column_4, expand: false, id: XVTTKK, title: Placement, width: 192}
+    - {data_key: column_5, expand: false, id: YYSHCG, title: Time, width: 176}
+    - {data_key: column_6, expand: false, id: DOEHRN, title: Avr-Splits, width: 177}
+    - {data_key: column_7, expand: false, id: UKXXVT, title: 'Date    ', width: 200}
     - {data_key: column_8, id: EEWMJF, title: '        Length'}
     role: overflow-scroll
     rows_per_page: 200
