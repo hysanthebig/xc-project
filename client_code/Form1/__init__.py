@@ -13,7 +13,7 @@ class Form1(Form1Template):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
-    self.repeating_panel_1 = 'wide'
+    self.repeating_panel_1.role = 'wide'
    
 #############################################Filter UI##############################################
     self.runner_checkbox = []
