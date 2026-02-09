@@ -794,15 +794,17 @@ textarea.anvil-component[disabled] {
   font-size: 16px;
 }
 
-.anvil-role-horizontal-scroll {
-  overflow-x: auto;
-  white-space: nowrap; /* Keeps items in a single row */
+.horizontal-repeater .repeating-panel {
+  display: flex;
 }
-
-.anvil-role-horizontal-repeater .anvil-panel-section-gutter {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
+.horizontal-repeater .repeating-panel>div {
+  min-width: 200px;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.horizontal-repeater .anvil-panel-col {
+  min-width: 200px;
 }
 
 /* Shadow values taken from 

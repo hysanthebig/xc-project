@@ -49,9 +49,7 @@ class Form1(Form1Template):
     self.sorting_picker.items = [("Name","Runner"),("Time","time_seconds"),("Date","Date_dt")]
 
     #####sidescroll
-    self.data_grid_1 = "anvil-role-horizontal-scroll"
-    self.repeating_panel_1  = "anvil-role-horizontal-scroll"
-    self.repeating_panel_2  = "anvil-role-horizontal-scroll"
+
     # Any code you write here will run before the form opens.
 
 
