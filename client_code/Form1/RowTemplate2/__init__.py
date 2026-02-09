@@ -21,5 +21,5 @@ class RowTemplate2(RowTemplate2Template):
       self.lbl_date.text = str(self.item.get('Date', ''))
       self.lbl_length.text = str(self.item.get('Length', ''))
 
-    self.lbl_runner = 'min-width-repeater'
+    self.lbl_runner.role = 'min-width-repeater'
     # Any code you write here will run before the form opens.
