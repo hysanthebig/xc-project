@@ -37,11 +37,13 @@ df = pd.DataFrame(data_list)
 
 @anvil.server.callable
 def one_of_item():
+  #############################Returns a list of single items, no repeats
   rows = app_tables.datatable.search()
   one_runner = sorted(set(row['Runner'] for row in rows))
   one_race = sorted(set(row['Race'] for row in rows))
   one_grade =sorted(set(row['Grade']for row in rows))
-  return(one_runner,one_race, one_grade)
+  one_length =sorted(set(row['Length']for row in rows))
+  return(one_runner,one_race, one_grade,one_length)
 
 @anvil.server.callable
 def filter(sort_by,runnerlist,racelist,gradelist):
@@ -49,7 +51,7 @@ def filter(sort_by,runnerlist,racelist,gradelist):
   runner_mask = pd.Series(False, index=df.index)
   race_mask = pd.Series(False, index=df.index)
   grade_mask = pd.Series(False, index = df.index)
-  
+  ####################Filter#######################
   for runner in runnerlist[0:]:
     col_data = df["Runner"].astype(str)
     single_runner_mask = col_data.str.contains(runner.strip(),case = False)
@@ -77,3 +79,34 @@ def filter(sort_by,runnerlist,racelist,gradelist):
   df_filtered = df_filtered.sort_values(by=[sort_by])
   df_filtered =df_filtered.drop(columns = ['time_seconds','Date_dt']).to_dict(orient="records")
   return(df_filtered)
+  
+@anvil.server.callable
+def pr_display(lengthlist,gradelist):
+  df_pr = df.copy()
+  df_pr = df_pr.sort_values(by = ["time_seconds"])
+  pr_df = df_pr.groupby("Runner")['time_seconds'].min().copy()
+  pr_rows = df_pr[df_pr["time_seconds"] == df_pr["Runner"].map(pr_df)]
+
+  readmask = pd.Series(True, index=df.index)
+  grade_mask = pd.Series(False, index = df.index)
+  length_mask = pd.Series(False, index = df.index)
+  
+  for grade in gradelist[0:]:
+    col_data = pr_rows["Grade"].astype(str)
+    single_mask = col_data.str.contains(str(grade))
+    grade_mask = grade_mask | single_mask
+  if len(gradelist) == 0:
+    grade_mask = pd.Series(True,index =df.index)
+    
+  for length in lengthlist[0:]:
+    col_data = pr_rows["Grade"].astype(str)
+    single_mask = col_data.str.contains(length.strip(),case = False)
+    length_mask = length_mask | single_mask
+  if len(lengthlist) == 0:
+    length_mask = pd.Series(True,index =df.index)
+
+  readmask = readmask & grade_mask & length_mask
+
+  pr_rows = pr_rows[readmask]
+  pr_rows = pr_rows.drop(columns = ['time_seconds','Date_dt']).to_dict(orient="records")
+  return(pr_rows)

@@ -14,11 +14,11 @@ class Form1(Form1Template):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
    
-
+#############################################Filter UI##############################################
     self.runner_checkbox = []
     self.race_checkbox = []
     self.grade_checkbox = []
-    total_runner,total_races,total_grades = anvil.server.call('one_of_item')  
+    total_runner,total_races,total_grades,total_lengths = anvil.server.call('one_of_item')  
     checkmark_runner = CheckBox(text='All Runners',checked=True)
     self.flow_panel_runner.add_component(checkmark_runner)
 
@@ -34,8 +34,17 @@ class Form1(Form1Template):
       checkmark_grade = CheckBox(text=grade,checked=False)
       self.flow_panel_grade.add_component(checkmark_grade)
       self.grade_checkbox.append(checkmark_grade)
-
-
+  ###############################PR UI###################################
+    self.pr_length_checkbox = []
+    self.pr_grade_checkbox = []
+    for grade in total_grades:
+      checkmark_pr_grade = CheckBox(text=grade,checked=False)
+      self.flow_pr_grade.add_component(checkmark_pr_grade)
+      self.pr_grade_checkbox.append(checkmark_pr_grade)
+    for length in total_lengths:
+      checkmark_pr_length = CheckBox(text=length,checked=False)
+      self.flow_pr_length.add_component(checkmark_pr_length)
+      self.pr_length_checkbox.append(checkmark_pr_length)
 
     self.sorting_picker.items = [("Name","Runner"),("Time","time_seconds"),("Date","Date_dt")]
     # Any code you write here will run before the form opens.
@@ -52,15 +61,35 @@ class Form1(Form1Template):
     self.repeating_panel_1.items = filtered_df
 
 
+  def pr_screen_display(self):
+    selected_lengths = [checkmark_pr_length.text for checkmark_pr_length in self.pr_length_checkbox if checkmark_pr_length.checked]
+    selected_grades = [checkmark_pr_grade.text for checkmark_pr_grade in self.pr_grade_checkbox if checkmark_pr_grade.checked]
+    self.repeating_panel_1.items = anvil.server.call("pr_display",selected_lengths,selected_grades)
+
   @handle("import_csv_to_datattable", "click")
   def import_csv_to_datattable_click(self, **event_args):
     anvil.server.call('import_csf_to_table')
 
   @handle("refreshtest", "click")
   def refreshtest_click(self, **event_args):
-    self.main_data_display()
+    if self.column_panel_2.visible is True:
+      self.main_data_display()
+    elif self.column_panel_3.visible is True:
+      self.pr_screen_display()
 
   @handle("sorting_picker", "change")
   def sorting_picker_change(self, **event_args):
     self.main_data_display()
 
+  @handle("select_pr", "clicked")
+  def select_pr_clicked(self, **event_args):
+    self.column_panel_2.visible = False
+    self.column_panel_3.visible = True
+    self.sorting_picker.visible = False
+
+
+  @handle("select_search", "clicked")
+  def select_search_clicked(self, **event_args):
+    self.column_panel_2.visible = True
+    self.column_panel_3.visible = False
+    self.sorting_picker.visible = True

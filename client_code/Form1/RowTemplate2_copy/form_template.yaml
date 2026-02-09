@@ -1,0 +1,35 @@
+components:
+- layout_properties: {column: VJQQOR}
+  name: lbl_race
+  properties: {}
+  type: Label
+- layout_properties: {column: OJLQEN}
+  name: lbl_grade
+  properties: {}
+  type: Label
+- layout_properties: {column: XVTTKK}
+  name: lbl_placement
+  properties: {}
+  type: Label
+- layout_properties: {column: YYSHCG}
+  name: lbl_time
+  properties: {}
+  type: Label
+- layout_properties: {column: DOEHRN}
+  name: lbl_avr_splits
+  properties: {}
+  type: Label
+- layout_properties: {column: EEWMJF}
+  name: lbl_length
+  properties: {align: center, icon_align: right}
+  type: Label
+- layout_properties: {column: JKSDUP}
+  name: lbl_runner
+  properties: {text: ''}
+  type: Label
+- layout_properties: {column: UKXXVT}
+  name: lbl_date
+  properties: {align: left}
+  type: Label
+container: {type: DataRowPanel}
+is_package: true
