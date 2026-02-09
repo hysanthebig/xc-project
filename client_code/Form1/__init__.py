@@ -61,9 +61,10 @@ class Form1(Form1Template):
 
 
   def pr_screen_display(self):
+    selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked]
     selected_lengths = [checkmark_length.text for checkmark_length in self.length_checkbox if checkmark_length.checked]
-    selected_grades = [checkmark_grade.text for checkmark_grade in self.pr_grade_checkbox if checkmark_grade.checked]
-    self.repeating_panel_1.items = anvil.server.call("pr_display",selected_lengths,selected_grades)
+    selected_grades = [checkmark_grade.text for checkmark_grade in self.grade_checkbox if checkmark_grade.checked]
+    self.repeating_panel_1.items = anvil.server.call("pr_display",selected_runners,selected_lengths,selected_grades)
 
   def graphing_module_display(self):
     selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked]
@@ -101,17 +102,21 @@ class Form1(Form1Template):
   @handle("select_pr", "clicked")
   def select_pr_clicked(self, **event_args):
     self.all_picker_on()
-    self.flow_panel_races
+    self.flow_panel_races.visible = False
     self.sorting_picker.visible = False
-
+    self.data_grid_1.visible = True
+    self.plot_1.visible = True
 
   @handle("select_search", "clicked")
   def select_search_clicked(self, **event_args):
     self.all_picker_on()
     self.sorting_picker.visible = True
+    self.plot_1.visible = False
+    self.data_grid_1.visible = True
 
   @handle("select_plot", "clicked")
   def select_plot_clicked(self, **event_args):
     self.all_picker_on()
+    self.plot_1.visible = True
     self.flow_panel_races.visible = False
 

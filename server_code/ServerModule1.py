@@ -106,35 +106,16 @@ def filter(sort_by,runnerlist,racelist,gradelist,lengthlist):
   return(df_filtered)
   
 @anvil.server.callable
-def pr_display(lengthlist,gradelist):
-  df_pr = df.copy()
+def pr_display(runnerlist,lengthlist,gradelist):
+  filitered_df = filter("Runner",runnerlist,[],gradelist,lengthlist)
+  df_pr = table_into_df(filitered_df)
   df_pr = df_pr.sort_values(by = ["time_seconds"])
   pr_df = df_pr.groupby("Runner")['time_seconds'].min().copy()
   pr_rows = df_pr[df_pr["time_seconds"] == df_pr["Runner"].map(pr_df)]
-
-  readmask = pd.Series(True, index=df.index)
-  grade_mask = pd.Series(False, index = df.index)
-  length_mask = pd.Series(False, index = df.index)
-  
-  for grade in gradelist[0:]:
-    col_data = pr_rows["Grade"].astype(str)
-    single_mask = col_data.str.contains(str(grade))
-    grade_mask = grade_mask | single_mask
-  if len(gradelist) == 0:
-    grade_mask = pd.Series(True,index =df.index)
-    
-  for length in lengthlist[0:]:
-    col_data = pr_rows["Length"].astype(str)
-    single_mask = col_data.str.contains(length.strip(),case = False)
-    length_mask = length_mask | single_mask
-  if len(lengthlist) == 0:
-    length_mask = pd.Series(True,index =df.index)
-
-  readmask = readmask & grade_mask & length_mask
-
-  pr_rows = pr_rows[readmask]
   pr_rows = pr_rows.drop(columns = ['time_seconds','Date_dt']).to_dict(orient="records")
   return(pr_rows)
+
+  
 @anvil.server.callable
 def graphing_module(runnerlist,gradelist,lengthlist):
   filitered_df = filter("Runner",runnerlist,[],gradelist,lengthlist)
