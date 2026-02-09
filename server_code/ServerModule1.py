@@ -5,6 +5,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
 import pandas as pd
+import plotly.graph_objects as go
 # This is a server module. It runs on the Anvil server,
 # rather than in the user's browser.
 #
@@ -18,22 +19,26 @@ import pandas as pd
 #   return 42
 #
 rows = app_tables.datatable.search()
-data_list = []
-for r in rows:
-  data_list.append({
-    "Runner": r["Runner"],
-    "Race": r["Race"],
-    "Grade": r["Grade"],
-    "Placement":r["Placement"],
-    "Date":r["Date"],
-    "Date_dt":r["Date_dt"],
-    "Time":r["Time"],
-    "time_seconds":r["time_seconds"],
-    "Length":r["Length"],
-    "Avr_splits":r['Avr_splits']
-  })
-df = pd.DataFrame(data_list)
 
+def table_into_df(rows):
+  data_list = []
+  for r in rows:
+    data_list.append({
+      "Runner": r["Runner"],
+      "Race": r["Race"],
+      "Grade": r["Grade"],
+      "Placement":r["Placement"],
+      "Date":r["Date"],
+      "Date_dt":r["Date_dt"],
+      "Time":r["Time"],
+      "time_seconds":r["time_seconds"],
+      "Length":r["Length"],
+      "Avr_splits":r['Avr_splits']
+    })
+  df = pd.DataFrame(data_list)
+  return(df)
+
+df = table_into_df(rows)
 
 @anvil.server.callable
 def one_of_item():
@@ -77,7 +82,7 @@ def filter(sort_by,runnerlist,racelist,gradelist):
 
   df_filtered = df.loc[readmask]
   df_filtered = df_filtered.sort_values(by=[sort_by])
-  df_filtered =df_filtered.drop(columns = ['time_seconds','Date_dt']).to_dict(orient="records")
+  df_filtered =df_filtered.to_dict(orient="records")
   return(df_filtered)
   
 @anvil.server.callable
@@ -110,3 +115,20 @@ def pr_display(lengthlist,gradelist):
   pr_rows = pr_rows[readmask]
   pr_rows = pr_rows.drop(columns = ['time_seconds','Date_dt']).to_dict(orient="records")
   return(pr_rows)
+@anvil.server.callable
+def graphing_module(runnerlist,gradelist):
+  filitered_df = filter("Runner",runnerlist,[],gradelist)
+  filitered_df = table_into_df(filitered_df)
+  filitered_df = filitered_df.drop(columns =['Race','Placement'])
+  grouped = filitered_df.groupby("Runner")
+  plot = go.Figure()
+  for runner, runner_df in grouped:
+    runner_df = runner_df.sort_values('Date_dt')
+    xvalues = runner_df["Date_dt"]
+    yvalues = runner_df['time_seconds']
+    trace = go.Scatter(x=xvalues,y=yvalues,mode="lines+markers",name=runner)
+    plot = plot.add_trace(trace)
+  return plot
+
+  
+  

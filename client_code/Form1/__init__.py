@@ -71,16 +71,25 @@ class Form1(Form1Template):
     selected_grades = [checkmark_pr_grade.text for checkmark_pr_grade in self.pr_grade_checkbox if checkmark_pr_grade.checked]
     self.repeating_panel_1.items = anvil.server.call("pr_display",selected_lengths,selected_grades)
 
+  def graphing_module_display(self):
+    selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked]
+    selected_grades = [checkmark_grade.text for checkmark_grade in self.grade_checkbox if checkmark_grade.checked]
+    self.data_grid_1.visible = False
+    print("Hello World")
+    self.plot_1.figure = anvil.server.call('graphing_module',selected_runners,selected_grades)
+    
   @handle("import_csv_to_datattable", "click")
   def import_csv_to_datattable_click(self, **event_args):
     anvil.server.call('import_csf_to_table')
 
   @handle("refreshtest", "click")
   def refreshtest_click(self, **event_args):
-    if self.column_panel_2.visible is True:
+    if self.select_search.selected is True:
       self.main_data_display()
-    elif self.column_panel_3.visible is True:
+    elif self.select_pr.selected is True:
       self.pr_screen_display()
+    elif self.select_plot.selected is True:
+      self.graphing_module_display()
 
   @handle("sorting_picker", "change")
   def sorting_picker_change(self, **event_args):
@@ -98,3 +107,4 @@ class Form1(Form1Template):
     self.column_panel_2.visible = True
     self.column_panel_3.visible = False
     self.sorting_picker.visible = True
+
