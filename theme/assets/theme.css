@@ -794,21 +794,6 @@ textarea.anvil-component[disabled] {
   font-size: 16px;
 }
 
-/* DataGrid Horizontal Scroll */
-.anvil-role-horizontal-scroll .data-grid-child-panel {
-  overflow-x: auto;
-}
-
-.anvil-role-horizontal-scroll .anvil-data-row-panel {
-  flex-wrap: nowrap;
-  width: fit-content; /* Ensures content dictates width */
-}
-
-/* Optional: Ensure headers match the scrollable content */
-.anvil-role-horizontal-scroll .anvil-panel-section-gutter {
-  flex-wrap: nowrap;
-}
-
 /* Shadow values taken from 
 https://stackoverflow.com/questions/30533055/calculating-shadow-values-for-all-material-design-elevations
 */

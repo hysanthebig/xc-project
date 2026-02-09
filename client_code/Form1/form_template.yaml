@@ -56,7 +56,7 @@ components:
 - components:
   - layout_properties: {pinned: false}
     name: repeating_panel_1
-    properties: {item_template: Form1.RowTemplate2, role: horizontal-scroll}
+    properties: {item_template: Form1.RowTemplate2, role: null}
     type: RepeatingPanel
   - layout_properties: {}
     name: repeating_panel_2
