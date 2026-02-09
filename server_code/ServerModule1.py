@@ -124,10 +124,11 @@ def graphing_module(runnerlist,gradelist):
   plot = go.Figure()
   for runner, runner_df in grouped:
     runner_df = runner_df.sort_values('Date_dt')
+    runner_df["Date_dt"] = pd.to_datetime(runner_df["Date_dt"])
     xvalues = runner_df["Date_dt"]
     yvalues = runner_df['time_seconds']
     trace = go.Scatter(x=xvalues,y=yvalues,mode="lines+markers",name=runner)
-    plot = plot.add_trace(trace)
+    plot.add_trace(trace)
   return plot
 
   
