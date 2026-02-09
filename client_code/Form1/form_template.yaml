@@ -56,7 +56,7 @@ components:
 - components:
   - layout_properties: {pinned: false}
     name: repeating_panel_1
-    properties: {item_template: Form1.RowTemplate2, role: null}
+    properties: {item_template: Form1.RowTemplate2, role: horizontal-scroll}
     type: RepeatingPanel
   - layout_properties: {}
     name: repeating_panel_2
@@ -71,8 +71,8 @@ components:
     - {data_key: column_2, id: VJQQOR, title: Race}
     - {data_key: column_3, id: OJLQEN, title: Grade}
     - {data_key: column_4, id: XVTTKK, title: Placement}
-    - {data_key: column_5, id: YYSHCG, title: Time}
-    - {data_key: column_6, id: DOEHRN, title: Avr-Splits}
+    - {data_key: column_5, expand: false, id: YYSHCG, title: Time, width: 111}
+    - {data_key: column_6, expand: false, id: DOEHRN, title: Avr-Splits, width: 87}
     - {data_key: column_7, expand: false, id: UKXXVT, title: 'Date    ', width: 35.50567626953125}
     - {data_key: column_8, id: EEWMJF, title: '        Length'}
     role: overflow-scroll

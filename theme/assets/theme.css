@@ -794,17 +794,19 @@ textarea.anvil-component[disabled] {
   font-size: 16px;
 }
 
-.horizontal-repeater .repeating-panel {
-  display: flex;
-}
-.horizontal-repeater .repeating-panel>div {
-  min-width: 200px;
-  display: flex;
+/* DataGrid Horizontal Scroll */
+.anvil-role-horizontal-scroll .data-grid-child-panel {
   overflow-x: auto;
-  overflow-y: hidden;
 }
-.horizontal-repeater .anvil-panel-col {
-  min-width: 200px;
+
+.anvil-role-horizontal-scroll .anvil-data-row-panel {
+  flex-wrap: nowrap;
+  width: fit-content; /* Ensures content dictates width */
+}
+
+/* Optional: Ensure headers match the scrollable content */
+.anvil-role-horizontal-scroll .anvil-panel-section-gutter {
+  flex-wrap: nowrap;
 }
 
 /* Shadow values taken from 
