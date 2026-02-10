@@ -144,6 +144,9 @@ def graphing_module(runnerlist,gradelist,lengthlist):
     trace.hovertemplate = "Race Date %{x}<br>%{text}"
 
   return plot
+@anvil.server.callable
+def average_time(last_races_to_check):
+  
 
   
   
