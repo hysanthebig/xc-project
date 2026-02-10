@@ -119,4 +119,12 @@ class Form1(Form1Template):
     self.all_picker_on()
     self.plot_1.visible = True
     self.flow_panel_races.visible = False
+    selected_races = [checkmark_race.text for checkmark_race in self.race_checkbox if checkmark_race.checked is False]
+    selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked]
+    anvil.server.call("average_time",selected_runners,3,selected_races)
 
+
+
+
+##testing zone
+    

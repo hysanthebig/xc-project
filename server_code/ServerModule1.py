@@ -50,7 +50,7 @@ def seconds_to_mintunes(seconds):
   return (time)
 
 
-  
+
 
 @anvil.server.callable
 def one_of_item():
@@ -75,7 +75,7 @@ def filter(sort_by,runnerlist,racelist,gradelist,lengthlist):
     single_runner_mask = col_data.str.contains(runner.strip(),case = False)
     runner_mask = runner_mask | single_runner_mask
   if len(runnerlist) == 0:
-      runner_mask = pd.Series(True,index =df.index)
+    runner_mask = pd.Series(True,index =df.index)
 
   for race in racelist[0:]:
     col_data = df["Race"].astype(str)
@@ -104,7 +104,7 @@ def filter(sort_by,runnerlist,racelist,gradelist,lengthlist):
   df_filtered = df_filtered.sort_values(by=[sort_by])
   df_filtered =df_filtered.to_dict(orient="records")
   return(df_filtered)
-  
+
 @anvil.server.callable
 def pr_display(runnerlist,lengthlist,gradelist):
   filitered_df = filter("Runner",runnerlist,[],gradelist,lengthlist)
@@ -115,7 +115,7 @@ def pr_display(runnerlist,lengthlist,gradelist):
   pr_rows = pr_rows.drop(columns = ['time_seconds','Date_dt']).to_dict(orient="records")
   return(pr_rows)
 
-  
+
 @anvil.server.callable
 def graphing_module(runnerlist,gradelist,lengthlist):
   filitered_df = filter("Runner",runnerlist,[],gradelist,lengthlist)
@@ -124,7 +124,7 @@ def graphing_module(runnerlist,gradelist,lengthlist):
   grouped = filitered_df.groupby("Runner")
   plot = go.Figure()
   all_y = []
-  
+
   for runner, runner_df in grouped:
     runner_df["Date_dt"] = pd.to_datetime(runner_df["Date_dt"])
     runner_df = runner_df.sort_values('Date_dt')
@@ -145,8 +145,14 @@ def graphing_module(runnerlist,gradelist,lengthlist):
 
   return plot
 @anvil.server.callable
-def average_time(last_races_to_check):
-  
-
-  
-  
+def average_time(runner,last_races_to_check,races_included):
+  df = filter("Date_dt",runner,races_included,[],[])
+  df = table_into_df(df)
+  df = df.sort_values(by='Date_dt', ascending = False)
+  if last_races_to_check == 0:
+    last_races_to_check = len(df)
+  df = df.head(last_races_to_check)
+  total_seconds_over_period = df['time_seconds'].sum()
+  averageseconds = round(total_seconds_over_period / last_races_to_check,3)
+  average_time = seconds_to_mintunes(averageseconds)
+  return average_time
