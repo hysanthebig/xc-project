@@ -49,6 +49,15 @@ def seconds_to_mintunes(seconds):
   time = f"{mint}:{sec}"
   return (time)
 
+def average_time_helper(df_runner,last_races_to_check):
+  df_runner = df_runner.sort_values(by='Date_dt', ascending = False)
+  if last_races_to_check == 0:
+    last_races_to_check = len(df_runner)
+  df_runner = df_runner.head(last_races_to_check)
+  total_seconds_over_period = df_runner['time_seconds'].sum()
+  averageseconds = round(total_seconds_over_period / last_races_to_check,3)
+  average_time = seconds_to_mintunes(averageseconds)
+  return average_time
 
 
 
@@ -147,14 +156,14 @@ def graphing_module(runnerlist,gradelist,lengthlist):
 
   ############################works, but use groupme
 @anvil.server.callable
-def average_time(runner,last_races_to_check,races_included):
-  df = filter("Date_dt",runner,races_included,[],[])
+def average_time(runners,last_races_to_check,races_included):
+  average_collected_time = {}
+  df = filter("Date_dt",runners,races_included,[],[])
   df = table_into_df(df)
-  df = df.sort_values(by='Date_dt', ascending = False)
-  if last_races_to_check == 0:
-    last_races_to_check = len(df)
-  df = df.head(last_races_to_check)
-  total_seconds_over_period = df['time_seconds'].sum()
-  averageseconds = round(total_seconds_over_period / last_races_to_check,3)
-  average_time = seconds_to_mintunes(averageseconds)
-  return average_time
+  for runner,df in df.groupby('Runner'):
+    average_collected_time[runner] = average_time_helper(df,last_races_to_check)
+
+  print(average_collected_time)
+  
+  
+  
