@@ -144,6 +144,8 @@ def graphing_module(runnerlist,gradelist,lengthlist):
     trace.hovertemplate = "Race Date %{x}<br>%{text}"
 
   return plot
+
+  ############################works, but use groupme
 @anvil.server.callable
 def average_time(runner,last_races_to_check,races_included):
   df = filter("Date_dt",runner,races_included,[],[])
