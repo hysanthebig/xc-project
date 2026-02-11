@@ -44,6 +44,7 @@ class Form1(Form1Template):
 
     self.sorting_picker.items = [("Name","Runner"),("Time","time_seconds"),("Date","Date_dt")]
 
+    self.text_boxes = []
     #####sidescroll
 
     # Any code you write here will run before the form opens.
@@ -80,12 +81,41 @@ class Form1(Form1Template):
 
   @handle("refreshtest", "click")
   def refreshtest_click(self, **event_args):
+    for text_display_made in self.text_boxes:
+      text_display_made.remove_from_parent()
+    self.text_boxes = []
     if self.select_search.selected is True:
       self.main_data_display()
     elif self.select_pr.selected is True:
       self.pr_screen_display()
     elif self.select_plot.selected is True:
       self.graphing_module_display()
+    elif self.select_average_time.selected is True:
+      self.average_time_display()
+
+  def average_time_display(self):
+    latest_races_to_check = int(self.text_input_box.text)
+    if isinstance(latest_races_to_check,int) is False:
+      self.text_display_1.text = "Please input only digits"
+      return
+    un_selected_races = [checkmark_race.text for checkmark_race in self.race_checkbox if checkmark_race.checked is False]
+    selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked]
+    if len(selected_runners) == 0:
+      selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked is False]
+    list_averaged_times,race_amount= anvil.server.call("average_time",selected_runners,latest_races_to_check,un_selected_races)
+    print(list_averaged_times)
+
+    for runner,averaged_time in list_averaged_times:
+      test1 = f"{runner} ran an average of {averaged_time}, across {race_amount} races"
+      text_display_made = TextBox(text = test1)
+      text_display_made.enabled = False
+      self.text_boxes.append(text_display_made)
+      self.text_display_column.add_component(text_display_made)
+
+    
+      
+      
+    ##############################UI IS UNDER HERE###################################3
 
 
   def all_picker_on(self):
@@ -93,6 +123,9 @@ class Form1(Form1Template):
     self.flow_panel_races.visible = True
     self.flow_panel_runner.visible = True
     self.flow_length.visible = True
+
+  def hide_all_display(self):
+    
 
     
   @handle("sorting_picker", "change")
@@ -107,6 +140,8 @@ class Form1(Form1Template):
     self.data_grid_1.visible = True
     self.plot_1.visible = True
 
+  
+
   @handle("select_search", "clicked")
   def select_search_clicked(self, **event_args):
     self.all_picker_on()
@@ -120,14 +155,14 @@ class Form1(Form1Template):
     self.plot_1.visible = True
     self.flow_panel_races.visible = False
 
-  def average_time_display(self):
-    latest_races_to_check = 0
-    un_selected_races = [checkmark_race.text for checkmark_race in self.race_checkbox if checkmark_race.checked is False]
-    selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked]
-    self.text_display_1 = anvil.server.call("average_time",selected_runners,latest_races_to_check,un_selected_races)
 
-
-
-
-##testing zone
+  @handle("select_average_time", "clicked")
+  def average_time_radio_clicked(self, **event_args):
+    self.all_picker_on()
+    self.text_input_box.text = 0
+    self.plot_1.visible = False
+    self.data_grid_1.visible = False
+    self.flow_panel_grade.visible = False
+    self.text_display_column.visible = True
+    self.text_display_1.text = ("Please input how many latest races you want to check as a number, put 0 to average all.\nSelect what runners you'd like to check, what races to exclude, and the length of races")
     

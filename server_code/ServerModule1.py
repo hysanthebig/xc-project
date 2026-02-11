@@ -162,8 +162,8 @@ def average_time(runners,last_races_to_check,races_included):
   df = table_into_df(df)
   for runner,df in df.groupby('Runner'):
     average_collected_time[runner] = average_time_helper(df,last_races_to_check)
-
-  print(average_collected_time)
-  
+  return_amount_of_races = len(races_included)
+  average_collected_time = sorted(average_collected_time.items())
+  return average_collected_time,return_amount_of_races
   
   
