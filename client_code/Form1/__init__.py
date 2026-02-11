@@ -77,6 +77,18 @@ class Form1(Form1Template):
     self.data_grid_1.visible = False
     self.plot_1.figure = anvil.server.call('graphing_module',selected_runners,selected_grades,selected_lengths)
     
+  def optimal_varisty_team_display(self):
+    selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox]
+    selected_races = [checkmark_race.text for checkmark_race in self.race_checkbox]
+    
+    list_averaged_times = anvil.server.call('optimal_varisity_lineup',selected_runners,3,selected_races)
+    for runner,averaged_time in list_averaged_times:
+      test1 = f"{runner} ran an average of {averaged_time}, across {race_amount} races"
+      text_display_made = TextBox(text = test1)
+      text_display_made.enabled = False
+      self.text_boxes.append(text_display_made)
+      self.text_display_column.add_component(text_display_made)
+
     
   @handle("import_csv_to_datattable", "click")
   def import_csv_to_datattable_click(self, **event_args):
@@ -97,7 +109,7 @@ class Form1(Form1Template):
     elif selected_value == 3:
       self.average_time_display()
     elif selected_value == 4:
-      pass
+      self.optimal_varisty_team_display()
 
   def average_time_display(self):
     latest_races_to_check = int(self.text_input_box.text)
@@ -145,6 +157,7 @@ class Form1(Form1Template):
     selected_text = self.drop_down_1.selected_value
     self.all_picker_on()
     self.hide_all_display()
+    self.text_display_1.text = ('')
     if selected_text == 0:
       self.sorting_picker.visible = True
       self.data_grid_1.visible = True
@@ -160,5 +173,9 @@ class Form1(Form1Template):
       self.text_display_column.visible = True
       self.text_display_1.text = ("Please input how many latest races you want to check as a number, put 0 to average all.\nSelect what runners you'd like to check, what races to exclude, and the length of races")
     elif selected_text == 4:
-      print("4")
-  
+      self.flow_panel_grade.visible = False
+      self.flow_panel_races.visible = False
+      self.flow_panel_runner.visible = False
+      self.flow_length.visible = False
+      self.sorting_picker.visible = False
+      self.text_display_column.visible = True
