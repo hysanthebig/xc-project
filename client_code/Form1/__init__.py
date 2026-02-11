@@ -45,7 +45,10 @@ class Form1(Form1Template):
     self.sorting_picker.items = [("Name","Runner"),("Time","time_seconds"),("Date","Date_dt")]
 
     self.text_boxes = []
-    #####sidescroll
+
+    self.drop_down_1.items = [("Search",0),("PR",1),("Plot",2),("Average Times",3),("Optimal Varisty Lineup",4)]
+
+
 
     # Any code you write here will run before the form opens.
     
@@ -84,14 +87,17 @@ class Form1(Form1Template):
     for text_display_made in self.text_boxes:
       text_display_made.remove_from_parent()
     self.text_boxes = []
-    if self.select_search.selected is True:
+    selected_value = self.drop_down_1.selected_value
+    if selected_value == 0:
       self.main_data_display()
-    elif self.select_pr.selected is True:
+    elif selected_value == 1:
       self.pr_screen_display()
-    elif self.select_plot.selected is True:
+    elif selected_value == 2:
       self.graphing_module_display()
-    elif self.select_average_time.selected is True:
+    elif selected_value == 3:
       self.average_time_display()
+    elif selected_value == 4:
+      pass
 
   def average_time_display(self):
     latest_races_to_check = int(self.text_input_box.text)
@@ -134,36 +140,25 @@ class Form1(Form1Template):
   def sorting_picker_change(self, **event_args):
     self.main_data_display()
 
-  @handle("select_pr", "clicked")
-  def select_pr_clicked(self, **event_args):
+  @handle("drop_down_1", "change")
+  def drop_down_1_change(self, **event_args):
+    selected_text = self.drop_down_1.selected_value
     self.all_picker_on()
     self.hide_all_display()
-    self.flow_panel_races.visible = False
-    self.data_grid_1.visible = True
-
+    if selected_text == 0:
+      self.sorting_picker.visible = True
+      self.data_grid_1.visible = True
+    elif selected_text == 1:
+      self.flow_panel_races.visible = False
+      self.data_grid_1.visible = True
+    elif selected_text == 2:
+      self.plot_1.visible = True
+      self.flow_panel_races.visible = False
+    elif selected_text == 3:
+      self.text_input_box.text = 0
+      self.flow_panel_grade.visible = False
+      self.text_display_column.visible = True
+      self.text_display_1.text = ("Please input how many latest races you want to check as a number, put 0 to average all.\nSelect what runners you'd like to check, what races to exclude, and the length of races")
+    elif selected_text == 4:
+      print("4")
   
-
-  @handle("select_search", "clicked")
-  def select_search_clicked(self, **event_args):
-    self.all_picker_on()
-    self.hide_all_display()
-    self.sorting_picker.visible = True
-    self.data_grid_1.visible = True
-
-  @handle("select_plot", "clicked")
-  def select_plot_clicked(self, **event_args):
-    self.all_picker_on()
-    self.hide_all_display()
-    self.plot_1.visible = True
-    self.flow_panel_races.visible = False
-
-
-  @handle("select_average_time", "clicked")
-  def average_time_radio_clicked(self, **event_args):
-    self.all_picker_on()
-    self.hide_all_display()
-    self.text_input_box.text = 0
-    self.flow_panel_grade.visible = False
-    self.text_display_column.visible = True
-    self.text_display_1.text = ("Please input how many latest races you want to check as a number, put 0 to average all.\nSelect what runners you'd like to check, what races to exclude, and the length of races")
-    

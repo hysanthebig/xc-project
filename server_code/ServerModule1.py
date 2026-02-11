@@ -166,4 +166,10 @@ def average_time(runners,last_races_to_check,races_included):
   average_collected_time = sorted(average_collected_time.items())
   return average_collected_time,return_amount_of_races
   
+@anvil.server.callable
+def optimal_varisity_lineup():
+  
+  df,empty = average_time()
+  
+  
   
