@@ -103,7 +103,6 @@ class Form1(Form1Template):
     if len(selected_runners) == 0:
       selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked is False]
     list_averaged_times,race_amount= anvil.server.call("average_time",selected_runners,latest_races_to_check,un_selected_races)
-    print(list_averaged_times)
 
     for runner,averaged_time in list_averaged_times:
       test1 = f"{runner} ran an average of {averaged_time}, across {race_amount} races"
@@ -123,9 +122,12 @@ class Form1(Form1Template):
     self.flow_panel_races.visible = True
     self.flow_panel_runner.visible = True
     self.flow_length.visible = True
+    self.sorting_picker.visible = False
 
   def hide_all_display(self):
-    
+    self.data_grid_1.visible = False
+    self.plot_1.visible = False
+    self.text_display_column.visible = False
 
     
   @handle("sorting_picker", "change")
@@ -135,23 +137,23 @@ class Form1(Form1Template):
   @handle("select_pr", "clicked")
   def select_pr_clicked(self, **event_args):
     self.all_picker_on()
+    self.hide_all_display()
     self.flow_panel_races.visible = False
-    self.sorting_picker.visible = False
     self.data_grid_1.visible = True
-    self.plot_1.visible = True
 
   
 
   @handle("select_search", "clicked")
   def select_search_clicked(self, **event_args):
     self.all_picker_on()
+    self.hide_all_display()
     self.sorting_picker.visible = True
-    self.plot_1.visible = False
     self.data_grid_1.visible = True
 
   @handle("select_plot", "clicked")
   def select_plot_clicked(self, **event_args):
     self.all_picker_on()
+    self.hide_all_display()
     self.plot_1.visible = True
     self.flow_panel_races.visible = False
 
@@ -159,9 +161,8 @@ class Form1(Form1Template):
   @handle("select_average_time", "clicked")
   def average_time_radio_clicked(self, **event_args):
     self.all_picker_on()
+    self.hide_all_display()
     self.text_input_box.text = 0
-    self.plot_1.visible = False
-    self.data_grid_1.visible = False
     self.flow_panel_grade.visible = False
     self.text_display_column.visible = True
     self.text_display_1.text = ("Please input how many latest races you want to check as a number, put 0 to average all.\nSelect what runners you'd like to check, what races to exclude, and the length of races")
