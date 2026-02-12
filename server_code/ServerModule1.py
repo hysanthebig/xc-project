@@ -49,11 +49,21 @@ def seconds_to_mintunes(seconds):
   time = f"{mint}:{sec}"
   return (time)
 
+def time_to_seconds(time):
+  mintunes, seconds = time.split(":")
+  mintunes = int(mintunes)
+  seconds = float(seconds)
+  time_seconds = mintunes*60 + seconds
+  return time_seconds
+
 def average_time_helper(df_runner,last_races_to_check):
   df_runner = df_runner.sort_values(by='Date_dt', ascending = False)
   if last_races_to_check == 0:
     last_races_to_check = len(df_runner)
+  
   df_runner = df_runner.head(last_races_to_check)
+  if df_runner.shape[0] < last_races_to_check:
+    return None
   total_seconds_over_period = df_runner['time_seconds'].sum()
   averageseconds = round(total_seconds_over_period / last_races_to_check,3)
   average_time = seconds_to_mintunes(averageseconds)
@@ -161,16 +171,20 @@ def average_time(runners,last_races_to_check,races_included):
   df = filter("Date_dt",runners,races_included,[],[])
   df = table_into_df(df)
   for runner,df in df.groupby('Runner'):
-    average_collected_time[runner] = average_time_helper(df,last_races_to_check)
-  return_amount_of_races = len(races_included)
+    if average_time_helper(df,last_races_to_check) is not None:
+      average_collected_time[runner] = average_time_helper(df,last_races_to_check)
+  if last_races_to_check == 0:
+    last_races_to_check = len(races_included)
+  return_amount_of_races = last_races_to_check
   average_collected_time = sorted(average_collected_time.items())
   return average_collected_time,return_amount_of_races
   
 @anvil.server.callable
 def optimal_varisity_lineup(runner,races_to_check,races):
-  average_times = average_time(runner,races_to_check,races)
-  print(average_times)
-  average_times = sorted(average_times,key=lambda x: x[1])
-  return average_times
+  average_times,x = average_time(runner,races_to_check,races)
+  average_times = sorted(average_times, key = lambda x: time_to_seconds(x[1]))
+  top7 = average_times[:7]
+  jvnext7 = average_times[7:14]
+  return top7,jvnext7
   
   

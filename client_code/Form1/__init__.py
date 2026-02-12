@@ -80,10 +80,23 @@ class Form1(Form1Template):
   def optimal_varisty_team_display(self):
     selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox]
     selected_races = [checkmark_race.text for checkmark_race in self.race_checkbox]
-    
-    list_averaged_times = anvil.server.call('optimal_varisity_lineup',selected_runners,3,selected_races)
-    for runner,averaged_time in list_averaged_times:
-      test1 = f"{runner} ran an average of {averaged_time}, across {race_amount} races"
+    races_to_check = int(self.text_input_box.text)
+    if isinstance(races_to_check,int) is False:
+      self.text_display_1.text = "Please input only digits"
+      return
+    top7,jvnext7 = anvil.server.call('optimal_varisity_lineup',selected_runners,races_to_check,selected_races)
+    for runner,averaged_time in top7:
+      test1 = f"{runner} ran an average of {averaged_time}"
+      text_display_made = TextBox(text = test1)
+      text_display_made.enabled = False
+      self.text_boxes.append(text_display_made)
+      self.text_display_column.add_component(text_display_made)
+    text_display_made = TextBox(text = "---JV---")
+    text_display_made.enabled = False
+    self.text_boxes.append(text_display_made)
+    self.text_display_column.add_component(text_display_made)
+    for runner,averaged_time in jvnext7:
+      test1 = f"{runner} ran an average of {averaged_time}"
       text_display_made = TextBox(text = test1)
       text_display_made.enabled = False
       self.text_boxes.append(text_display_made)
@@ -173,6 +186,7 @@ class Form1(Form1Template):
       self.text_display_column.visible = True
       self.text_display_1.text = ("Please input how many latest races you want to check as a number, put 0 to average all.\nSelect what runners you'd like to check, what races to exclude, and the length of races")
     elif selected_text == 4:
+      self.text_input_box.text = "3"
       self.flow_panel_grade.visible = False
       self.flow_panel_races.visible = False
       self.flow_panel_runner.visible = False
