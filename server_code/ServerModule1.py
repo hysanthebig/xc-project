@@ -60,7 +60,7 @@ def average_time_helper(df_runner,last_races_to_check):
   df_runner = df_runner.sort_values(by='Date_dt', ascending = False)
   if last_races_to_check == 0:
     last_races_to_check = len(df_runner)
-  
+
   df_runner = df_runner.head(last_races_to_check)
   if df_runner.shape[0] < last_races_to_check:
     return None
@@ -178,7 +178,7 @@ def average_time(runners,last_races_to_check,races_included):
   return_amount_of_races = last_races_to_check
   average_collected_time = sorted(average_collected_time.items())
   return average_collected_time,return_amount_of_races
-  
+
 @anvil.server.callable
 def optimal_varisity_lineup(runner,races_to_check,races):
   average_times,x = average_time(runner,races_to_check,races)
@@ -186,12 +186,22 @@ def optimal_varisity_lineup(runner,races_to_check,races):
   top7 = average_times[:7]
   jvnext7 = average_times[7:14]
   return top7,jvnext7
-  
+
 @anvil.server.callable
 def comparison_between_races(runner,races):
 
   df = filter("Date_dt",runner,races,[],[])
   df = table_into_df(df)
   print(df)
-  time_1 = df['time_seconds']
+  if df.shape[1] != 2:
+    print("test")
+    return
+  time_1,time_2 = df['time_seconds']
+  print(df['Time'])
+  time_difference = abs(time_1 - time_2)
+
   print(time_1)
+  print(time_2)
+  print(time_difference)
+  time_difference = seconds_to_mintunes(time_difference)
+  print(time_difference)
