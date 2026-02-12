@@ -46,7 +46,7 @@ class Form1(Form1Template):
 
     self.text_boxes = []
 
-    self.drop_down_1.items = [("Search",0),("PR",1),("Plot",2),("Average Times",3),("Optimal Varisty Lineup",4)]
+    self.drop_down_1.items = [("Search",0),("PR",1),("Plot",2),("Average Times",3),("Optimal Varisty Lineup",4),("Race Comparison",5)]
 
 
 
@@ -102,6 +102,13 @@ class Form1(Form1Template):
       self.text_boxes.append(text_display_made)
       self.text_display_column.add_component(text_display_made)
 
+  def comparison_between_races_display(self):
+    selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked is True]
+    selected_races = [checkmark_race.text for checkmark_race in self.race_checkbox if checkmark_race.checked is True]
+    print(selected_runners)
+    print(selected_races)
+    self.text_display_1.text = anvil.server.call('comparison_between_races',selected_runners,selected_races)
+    
     
   @handle("import_csv_to_datattable", "click")
   def import_csv_to_datattable_click(self, **event_args):
@@ -123,6 +130,8 @@ class Form1(Form1Template):
       self.average_time_display()
     elif selected_value == 4:
       self.optimal_varisty_team_display()
+    elif selected_value == 5:
+      self.comparison_between_races_display()
 
   def average_time_display(self):
     latest_races_to_check = int(self.text_input_box.text)
@@ -190,6 +199,11 @@ class Form1(Form1Template):
       self.flow_panel_grade.visible = False
       self.flow_panel_races.visible = False
       self.flow_panel_runner.visible = False
+      self.flow_length.visible = False
+      self.sorting_picker.visible = False
+      self.text_display_column.visible = True
+    elif selected_text == 5:
+      self.flow_panel_grade.visible = False
       self.flow_length.visible = False
       self.sorting_picker.visible = False
       self.text_display_column.visible = True
