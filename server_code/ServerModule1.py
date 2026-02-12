@@ -187,4 +187,13 @@ def optimal_varisity_lineup(runner,races_to_check,races):
   jvnext7 = average_times[7:14]
   return top7,jvnext7
   
-  
+@anvil.server.callable
+def comparison_between_races(runner,races):
+
+  df = filter("Date_dt",runner,races,[],[])
+  df = table_into_df(df)
+  if df.shape([1]) != 2:
+    return "Error_type_data"
+  print(df)
+  time_1 = df['time_seconds']
+  print(time_1)
