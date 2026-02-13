@@ -46,7 +46,7 @@ class Form1(Form1Template):
 
     self.text_boxes = []
 
-    self.drop_down_1.items = [("Search",0),("PR",1),("Plot",2),("Average Times",3),("Optimal Varisty Lineup",4),("Race Comparison",5)]
+    self.drop_down_1.items = [("Search",0),("PR",1),("Plot",2),("Average Times",3),("Optimal Varisty Lineup (just for fun)",4),("Race Comparison(in progress)",5)]
 
 
 
@@ -105,10 +105,12 @@ class Form1(Form1Template):
   def comparison_between_races_display(self):
     selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked is True]
     selected_races = [checkmark_race.text for checkmark_race in self.race_checkbox if checkmark_race.checked is True]
-    print(selected_runners)
-    print(selected_races)
-    self.text_display_1.text = anvil.server.call('comparison_between_races',selected_runners,selected_races)
-    
+    time_difference,days_between_races,average_gain= anvil.server.call('comparison_between_races',selected_runners,selected_races)
+    if time_difference is None:
+      self.text_display_1.text = "Either too many selected races, or too few, Please only select 2 races total"
+    else:
+      self.text_display_1.text = f"Time difference of {time_difference} \n Days between races: {days_between_races} \n Average time difference per day: {average_gain}"
+      
     
   @handle("import_csv_to_datattable", "click")
   def import_csv_to_datattable_click(self, **event_args):
