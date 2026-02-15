@@ -209,3 +209,4 @@ class Form1(Form1Template):
       self.flow_length.visible = False
       self.sorting_picker.visible = False
       self.text_display_column.visible = True
+ 

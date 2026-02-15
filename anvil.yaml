@@ -49,6 +49,11 @@ db_schema:
       type: string
     server: full
     title: Files
+  table_3:
+    client: none
+    columns: []
+    server: full
+    title: Table 3
 name: XC project
 package_name: XC_project
 runtime_options:
