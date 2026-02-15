@@ -162,9 +162,6 @@ def graphing_module(runnerlist,gradelist,lengthlist):
     trace.text = [f"Time: {seconds_to_mintunes(s)}" for s in trace.y * 60]  # or original seconds
     trace.hovertemplate = "Race Date %{x}<br>%{text}"
 
-  return plot
-
-  ############################works, but use groupme
 @anvil.server.callable
 def average_time(runners,last_races_to_check,races_included):
   average_collected_time = {}
@@ -204,3 +201,23 @@ def comparison_between_races(runner,races):
      average_time_per_day = 0
   time_difference = seconds_to_mintunes(time_difference)
   return time_difference, time_since,average_time_per_day
+
+#####################################test_race_prediction_code
+@anvil.server.callable
+def race_prediction(runner,racelist):
+  df = filter("Runner",runner,racelist,[],[])
+  df = table_into_df(df)
+  future_date ='11/06/2025'
+  df["Date_dt"] = pd.to_datetime(df["Date_dt"])
+  first_date = df["Date_dt"].min()
+  df["day_num"] = (df["Date_dt"] - first_date).dt.days
+  x = df["day_num"].values
+  y = df["time_seconds"].values
+  print(x)
+  print(y)
+  m,b = np.polyfit(x,y,1)
+  future_day = (pd.to_datetime(future_date)-first_date).days
+  predicited_time = m*future_day+b
+  predicited_time = seconds_to_mintunes(predicited_time)
+  print(predicited_time)
+    

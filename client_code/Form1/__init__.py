@@ -121,6 +121,11 @@ class Form1(Form1Template):
     for text_display_made in self.text_boxes:
       text_display_made.remove_from_parent()
     self.text_boxes = []
+
+    selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked is True]
+    selected_races = [checkmark_race.text for checkmark_race in self.race_checkbox if checkmark_race.checked is False]
+    anvil.server.call("race_prediction",selected_runners,selected_races)
+    
     selected_value = self.drop_down_1.selected_value
     if selected_value == 0:
       self.main_data_display()
