@@ -240,5 +240,7 @@ def race_prediction(runner,racelist):
   print(averaged_change)
   dfz = df.tail(1)
   latest_date = dfz["Date_dt"]
+  latest_time = dfz["tim"]
   day_difference =(pd.to_datetime(future_date)-latest_date).days
-  time_difference = day_difference*
+  time_difference = day_difference*averaged_change
+  
