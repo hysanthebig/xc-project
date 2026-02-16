@@ -105,7 +105,7 @@ class Form1(Form1Template):
   def comparison_between_races_display(self):
     selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked is True]
     selected_races = [checkmark_race.text for checkmark_race in self.race_checkbox if checkmark_race.checked is True]
-    time_difference,days_between_races,average_gain= anvil.server.call('comparison_between_races',selected_runners,selected_races)
+    time_difference,days_between_races,average_gain= anvil.server.call('comparison_between_races',selected_runners,selected_races,None)
     if time_difference is None:
       self.text_display_1.text = "Either too many selected races, or too few, Please only select 2 races total"
     else:

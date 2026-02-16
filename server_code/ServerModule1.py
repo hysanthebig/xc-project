@@ -161,7 +161,8 @@ def graphing_module(runnerlist,gradelist,lengthlist):
   for trace in plot.data:
     trace.text = [f"Time: {seconds_to_mintunes(s)}" for s in trace.y * 60]  # or original seconds
     trace.hovertemplate = "Race Date %{x}<br>%{text}"
-
+  return plot
+  
 @anvil.server.callable
 def average_time(runners,last_races_to_check,races_included):
   average_collected_time = {}
@@ -185,18 +186,21 @@ def optimal_varisity_lineup(runner,races_to_check,races):
   return top7,jvnext7
 
 @anvil.server.callable
-def comparison_between_races(runner,races):
-  df = filter("Date_dt",runner,races,[],[])
-  df = table_into_df(df)
+def comparison_between_races(runner,races,optional_df):
+  if optional_df is None:
+    df = filter("Date_dt",runner,races,[],[])
+    df = table_into_df(df)
+  else:
+    df = optional_df
   if df.shape[0] != 2:
     return None,None,None
   time_1,time_2 = df['time_seconds']
   time_difference = (time_1 - time_2)
   df["Date_dt"] = pd.to_datetime(df["Date_dt"])
   time_since = df.loc[df.index[0],"Date_dt"]-df.loc[df.index[1],"Date_dt"]
-  time_since = abs(time_since.days)
+  time_since = (time_since.days)
   if time_since != 0:
-    average_time_per_day = round(abs(time_difference)/time_since,4)
+    average_time_per_day = round((time_difference)/time_since,4)
   else:
      average_time_per_day = 0
   time_difference = seconds_to_mintunes(time_difference)
@@ -205,7 +209,7 @@ def comparison_between_races(runner,races):
 #####################################test_race_prediction_code
 @anvil.server.callable
 def race_prediction(runner,racelist):
-  df = filter("Runner",runner,racelist,[],[])
+  df = filter("Time",runner,racelist,[],[])
   df = table_into_df(df)
   future_date ='11/06/2025'
   df["Date_dt"] = pd.to_datetime(df["Date_dt"])
@@ -214,10 +218,27 @@ def race_prediction(runner,racelist):
   x = df["day_num"].values
   y = df["time_seconds"].values
   print(x)
-  print(y)
+  t = []
+  for value in y:
+    t.append(seconds_to_mintunes(value))
+  print(t)
   m,b = np.polyfit(x,y,1)
   future_day = (pd.to_datetime(future_date)-first_date).days
   predicited_time = m*future_day+b
   predicited_time = seconds_to_mintunes(predicited_time)
   print(predicited_time)
-    
+
+  df = df.sort_values(by = "Date_dt")
+  dfs = df.iloc[[-3,-2]]
+  print(dfs)
+  x,b, average_time_1 = comparison_between_races(None,None,dfs)
+  dfx = df.tail(2)
+  print(dfx)
+  x,b, average_time_2 = comparison_between_races(None,None,dfx)
+  print(average_time_1,average_time_2)
+  averaged_change = (average_time_1+average_time_2)/2
+  print(averaged_change)
+  dfz = df.tail(1)
+  latest_date = dfz["Date_dt"]
+  day_difference =(pd.to_datetime(future_date)-latest_date).days
+  time_difference = day_difference*
