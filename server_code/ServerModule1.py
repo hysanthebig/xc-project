@@ -233,9 +233,10 @@ def race_prediction(runner,racelist):
   x,b, average_time_1 = comparison_between_races(None,None,dfs)
   dfx = df.tail(2)
   x,b, average_time_2 = comparison_between_races(None,None,dfx)
-  averaged_change = (average_time_1+average_time_2)/2
+  race_changes = [average_time_1,average_time_2]
+  averaged_change = np.median(race_changes)
   latest_date = df['Date_dt'].max()
-  latest_time = df["time_seconds"].min()
+  latest_time = df['time_seconds'].min()
   day_difference =(pd.to_datetime(future_date)-latest_date).days
   time_difference = day_difference*averaged_change
   t1 = int(latest_time)+int(time_difference)
