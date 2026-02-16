@@ -179,7 +179,12 @@ class Form1(Form1Template):
   def uncheck_all(self):
     for x in  self.runner_checkbox:
       x.checked = False
-    for x in self.grade_checkbox
+    for x in self.grade_checkbox:
+      x.checked = False
+    for x in self.length_checkbox:
+      x.checked = False
+    for x in self.race_checkbox:
+      x.checked = False
   @handle("sorting_picker", "change")
   def sorting_picker_change(self, **event_args):
     self.main_data_display()
@@ -217,4 +222,8 @@ class Form1(Form1Template):
       self.flow_length.visible = False
       self.sorting_picker.visible = False
       self.text_display_column.visible = True
+
+  @handle("button_1", "click")
+  def button_1_click(self, **event_args):
+    self.uncheck_all()
  
