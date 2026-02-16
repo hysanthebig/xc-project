@@ -226,7 +226,7 @@ def race_prediction(runner,racelist):
   future_day = (pd.to_datetime(future_date)-first_date).days
   predicited_time = m*future_day+b
   predicited_time = seconds_to_mintunes(predicited_time)
-  print(predicited_time)
+  print(f"Linear Regression: {predicited_time}")
 
   df = df.sort_values(by = "Date_dt")
   dfs = df.iloc[[-3,-2]]
@@ -240,4 +240,6 @@ def race_prediction(runner,racelist):
   day_difference =(pd.to_datetime(future_date)-latest_date).days
   time_difference = day_difference*averaged_change
   t1 = int(latest_time)+int(time_difference)
-  print(seconds_to_mintunes(t1))
+  t2 = int(latest_time)+int(average_time_2)
+  print(f"Latest: {seconds_to_mintunes(t2)}")
+  print(f"Averaged: {seconds_to_mintunes(t1)}")

@@ -110,7 +110,12 @@ class Form1(Form1Template):
       self.text_display_1.text = "Either too many selected races, or too few, Please only select 2 races total"
     else:
       self.text_display_1.text = f"Time difference of {time_difference} \n Days between races: {days_between_races} \n Average time difference per day: {average_gain}"
-      
+
+  def race_prediction_display(self):###protoype_currently
+    selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked is True]
+    selected_races = [checkmark_race.text for checkmark_race in self.race_checkbox if checkmark_race.checked is False]
+    anvil.server.call("race_prediction",selected_runners,selected_races)
+
     
   @handle("import_csv_to_datattable", "click")
   def import_csv_to_datattable_click(self, **event_args):
@@ -121,11 +126,6 @@ class Form1(Form1Template):
     for text_display_made in self.text_boxes:
       text_display_made.remove_from_parent()
     self.text_boxes = []
-
-    selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked is True]
-    selected_races = [checkmark_race.text for checkmark_race in self.race_checkbox if checkmark_race.checked is False]
-    anvil.server.call("race_prediction",selected_runners,selected_races)
-    
     selected_value = self.drop_down_1.selected_value
     if selected_value == 0:
       self.main_data_display()
@@ -176,7 +176,10 @@ class Form1(Form1Template):
     self.plot_1.visible = False
     self.text_display_column.visible = False
 
-    
+  def uncheck_all(self):
+    for x in  self.runner_checkbox:
+      x.checked = False
+    for x in self.grade_checkbox
   @handle("sorting_picker", "change")
   def sorting_picker_change(self, **event_args):
     self.main_data_display()
