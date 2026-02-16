@@ -230,17 +230,13 @@ def race_prediction(runner,racelist):
 
   df = df.sort_values(by = "Date_dt")
   dfs = df.iloc[[-3,-2]]
-  print(dfs)
   x,b, average_time_1 = comparison_between_races(None,None,dfs)
   dfx = df.tail(2)
-  print(dfx)
   x,b, average_time_2 = comparison_between_races(None,None,dfx)
-  print(average_time_1,average_time_2)
   averaged_change = (average_time_1+average_time_2)/2
-  print(averaged_change)
-  dfz = df.tail(1)
-  latest_date = dfz["Date_dt"]
-  latest_time = dfz["tim"]
+  latest_date = df['Date_dt'].max()
+  latest_time = df["time_seconds"].min()
   day_difference =(pd.to_datetime(future_date)-latest_date).days
   time_difference = day_difference*averaged_change
-  
+  t1 = int(latest_time)+int(time_difference)
+  print(seconds_to_mintunes(t1))
