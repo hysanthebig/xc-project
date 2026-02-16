@@ -44,18 +44,16 @@ components:
   type: DropDown
 - components:
   - event_bindings: {}
-    layout_properties: {grid_position: 'HJVFBH,TRBRBZ'}
-    name: button_1
-    properties: {align: center, bold: true, font: '', font_size: 8, text: Uncheck Boxes}
-    type: Button
-  - layout_properties: {grid_position: 'OUGJCQ,WWXFKC'}
-    name: flow_panel_1
-    properties: {}
-    type: FlowPanel
-  - event_bindings: {}
     layout_properties: {grid_position: 'MBXVYZ,BGKDMO'}
     name: refreshtest
     properties: {background: 'theme:White', bold: true, foreground: 'theme:Primary 500', text: refresh}
+    type: Button
+  - data_bindings:
+    - {code: 'self.item['''']', property: border, writeback: false}
+    event_bindings: {}
+    layout_properties: {grid_position: 'MBXVYZ,FBJWVA'}
+    name: button_1
+    properties: {align: center, bold: true, border: '', font: '', font_size: 8, icon: '', text: Uncheck Boxes}
     type: Button
   layout_properties: {slot: title}
   name: column_panel_1
