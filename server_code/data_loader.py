@@ -18,12 +18,12 @@ import pandas as pd
 #   return 42
 @anvil.server.callable
 def import_csf_to_table():
-  with anvil.files.data_files.open("xc_data.csv") as f:
+  with anvil.files.data_files.open("track_data.csv") as f:
     df = pd.read_csv(f)
 
   for _, row in df.iterrows():
     row= {k:(None if pd.isna(v) else v) for k,v in row.items()}
-    app_tables.datatable.add_row(
+    app_tables.track_table.add_row(
       Runner=row["Runner"],Race=row["Race"],Placement=row["Placement"],Grade=row["Grade"],Time=row["Time"],Avr_splits=row["Avr splits"],Date=row["Date"],Length=row["Length"],Date_dt=row["Date_dt"],time_seconds=row["time_seconds"])
   return "Done"
   
