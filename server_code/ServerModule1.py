@@ -72,9 +72,12 @@ def average_time_helper(df_runner,last_races_to_check):
 
 
 @anvil.server.callable
-def one_of_item():
+def one_of_item(sport):
   #############################Returns a list of single items, no repeats
-  rows = app_tables.datatable.search()
+  if sport == "XC":
+    rows = app_tables.datatable.search()
+  if sport == "Track":
+    rows = app_tables.track_table.search()
   one_runner = sorted(set(row['Runner'] for row in rows))
   one_race = sorted(set(row['Race'] for row in rows))
   one_grade =sorted(set(row['Grade']for row in rows))
