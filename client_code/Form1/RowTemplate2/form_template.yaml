@@ -1,19 +1,19 @@
 components:
 - layout_properties: {column: VJQQOR}
   name: lbl_race
-  properties: {}
+  properties: {align: left}
   type: Label
 - layout_properties: {column: OJLQEN}
   name: lbl_grade
-  properties: {}
+  properties: {align: left, foreground: 'theme:Secondary 500'}
   type: Label
 - layout_properties: {column: XVTTKK}
   name: lbl_placement
-  properties: {}
+  properties: {align: left}
   type: Label
 - layout_properties: {column: YYSHCG}
   name: lbl_time
-  properties: {}
+  properties: {foreground: red}
   type: Label
 - layout_properties: {column: DOEHRN}
   name: lbl_avr_splits

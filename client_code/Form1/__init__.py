@@ -16,37 +16,39 @@ class Form1(Form1Template):
     self.data_grid_1.role = 'wide'
 
 #############################################Filter UI##############################################
-    self.runner_checkbox = []
-    self.race_checkbox = []
-    self.grade_checkbox = []
-    self.length_checkbox = []
-    total_runner,total_races,total_grades,total_lengths = anvil.server.call('one_of_item')  
-    checkmark_runner = CheckBox(text='All Runners',checked=True)
-    self.flow_panel_runner.add_component(checkmark_runner)
-
-    for runner in total_runner:
-      checkmark_runner = CheckBox(text=runner,checked=False)
+    def selected(self):
+      self.runner_checkbox = []
+      self.race_checkbox = []
+      self.grade_checkbox = []
+      self.length_checkbox = []
+      total_runner,total_races,total_grades,total_lengths = anvil.server.call('one_of_item')  
+      checkmark_runner = CheckBox(text='All Runners',checked=True)
       self.flow_panel_runner.add_component(checkmark_runner)
-      self.runner_checkbox.append(checkmark_runner)
-    for race in total_races:
-      checkmark_race = CheckBox(text=race,checked=False)
-      self.flow_panel_races.add_component(checkmark_race)
-      self.race_checkbox.append(checkmark_race)
-    for grade in total_grades:
-      checkmark_grade = CheckBox(text=grade,checked=False)
-      self.flow_panel_grade.add_component(checkmark_grade)
-      self.grade_checkbox.append(checkmark_grade)
-    for length in total_lengths:
-      checkmark_length = CheckBox(text=length,checked=False)
-      self.flow_length.add_component(checkmark_length)
-      self.length_checkbox.append(checkmark_length)
+  
+      for runner in total_runner:
+        checkmark_runner = CheckBox(text=runner,checked=False)
+        self.flow_panel_runner.add_component(checkmark_runner)
+        self.runner_checkbox.append(checkmark_runner)
+      for race in total_races:
+        checkmark_race = CheckBox(text=race,checked=False)
+        self.flow_panel_races.add_component(checkmark_race)
+        self.race_checkbox.append(checkmark_race)
+      for grade in total_grades:
+        checkmark_grade = CheckBox(text=grade,checked=False)
+        self.flow_panel_grade.add_component(checkmark_grade)
+        self.grade_checkbox.append(checkmark_grade)
+      for length in total_lengths:
+        checkmark_length = CheckBox(text=length,checked=False)
+        self.flow_length.add_component(checkmark_length)
+        self.length_checkbox.append(checkmark_length)
+  
+      self.sorting_picker.items = [("Name","Runner"),("Time","time_seconds"),("Date","Date_dt")]
+  
+      self.text_boxes = []
+  
+      self.drop_down_1.items = [("Search",0),("PR",1),("Plot",2),("Average Times",3),("Optimal Varisty Lineup (just for fun)",4),("Race Comparison(in progress)",5)]
 
-    self.sorting_picker.items = [("Name","Runner"),("Time","time_seconds"),("Date","Date_dt")]
-
-    self.text_boxes = []
-
-    self.drop_down_1.items = [("Search",0),("PR",1),("Plot",2),("Average Times",3),("Optimal Varisty Lineup (just for fun)",4),("Race Comparison(in progress)",5)]
-
+  selected(self)
 
 
     # Any code you write here will run before the form opens.

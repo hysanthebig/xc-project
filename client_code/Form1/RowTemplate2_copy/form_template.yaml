@@ -1,7 +1,7 @@
 components:
 - layout_properties: {column: VJQQOR}
   name: lbl_grade
-  properties: {}
+  properties: {align: right}
   type: Label
 - layout_properties: {column: VJQQOR}
   name: lbl_race
