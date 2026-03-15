@@ -16,8 +16,8 @@ class Form1(Form1Template):
     self.grade_checkbox = []
     self.length_checkbox = []
     total_runner,total_races,total_grades,total_lengths = anvil.server.call('one_of_item',sport)  
-    checkmark_runner = CheckBox(text='All Runners',checked=True)
-    self.flow_panel_runner.add_component(checkmark_runner)
+    checkmark_all = CheckBox(text='All Runners',checked=True)
+    self.flow_panel_runner.add_component(checkmark_all)
 
     for runner in total_runner:
       checkmark_runner = CheckBox(text=runner,checked=False)
@@ -46,16 +46,24 @@ class Form1(Form1Template):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     self.data_grid_1.role = 'wide'
+
     self.load_data("XC")
+
 
   @handle("sport_selector", "change")
   def sport_selector_change(self, **event_args):
-    for checkmark_runner in self.runner_checkbox if checkmark_runner.
-    
+    self.flow_panel_runner.clear()
+    self.flow_panel_grade.clear()
+    self.flow_panel_races.clear()
+    self.flow_length.clear()
+      
     if self.sport_selector.selected_value == "XC":
       self.load_data("XC")
+      anvil.server.call('data_selector',"XC")
     if self.sport_selector.selected_value == "Track":
       self.load_data("Track")
+      anvil.server.call('data_selector',"Track")
+  
 
     # Any code you write here will run before the form opens.
 

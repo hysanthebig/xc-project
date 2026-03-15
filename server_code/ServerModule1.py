@@ -19,9 +19,16 @@ import numpy as np
 #   print("Hello, " + name + "!")
 #   return 42
 #
-rows = app_tables.datatable.search()
 
-def table_into_df(rows):
+df = None
+xc_df = None
+track_df = None
+@anvil.server.callable
+def table_into_df(sport):
+  if sport == "XC":
+    rows = app_tables.datatable.search()
+  if sport == "Track":
+    rows = app_tables.track_table.search()
   data_list = []
   for r in rows:
     data_list.append({
@@ -37,10 +44,11 @@ def table_into_df(rows):
       "Avr_splits":r['Avr_splits']
     })
   df = pd.DataFrame(data_list)
-  return(df)
+  return df
 
-df = table_into_df(rows)
-
+xc_df = table_into_df("XC")
+track_df = table_into_df("Track")
+    
 def seconds_to_mintunes(seconds):
   mint = int(seconds // 60)
   sec = round(seconds % 60, 1)
@@ -86,6 +94,11 @@ def one_of_item(sport):
 
 @anvil.server.callable
 def filter(sort_by,runnerlist,racelist,gradelist,lengthlist):
+
+  if sport == "XC":
+    df = xc_df
+  if sport == "Track":
+    
   readmask = pd.Series(True, index=df.index)
   runner_mask = pd.Series(False, index=df.index)
   race_mask = pd.Series(False, index=df.index)
