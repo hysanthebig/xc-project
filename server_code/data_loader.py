@@ -27,7 +27,9 @@ def import_csf_to_table():
   print(df.head)
   for _, row in df.iterrows():
     row= {k:(None if pd.isna(v) else v) for k,v in row.items()}
-    if row = app_tables.track_table.search(Runner=row["Runner"])
-    app_tables.track_table.add_row(
-      Runner=row["Runner"],Race=row["Race"],Placement=row["Placement"],Grade=row["Grade"],Time=row["Time"],Avr_splits=row["Avr splits"],Date=row["Date"],Length=row["Distance"],RaceType = row["RaceType"],Date_dt=row["Date_dt"],time_seconds=row["time_seconds"])
+    exists = app_tables.track_table.search(Runner=row["Runner"],Race=row["Race"],RaceType=row["RaceType"])
+    if not list(exists):
+      app_tables.track_table.add_row(
+        Runner=row["Runner"],Race=row["Race"],Placement=row["Placement"],Grade=row["Grade"],Time=row["Time"],Avr_splits=row["Avr splits"],Date=row["Date"],Length=row["Distance"],RaceType = row["RaceType"],Date_dt=row["Date_dt"],time_seconds=row["time_seconds"])
   return "Done"
+
