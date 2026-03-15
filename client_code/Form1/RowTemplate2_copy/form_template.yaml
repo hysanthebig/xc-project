@@ -1,15 +1,11 @@
 components:
 - layout_properties: {column: VJQQOR}
-  name: lbl_race
-  properties: {}
-  type: Label
-- layout_properties: {column: OJLQEN}
   name: lbl_grade
   properties: {}
   type: Label
-- layout_properties: {column: XVTTKK}
-  name: lbl_placement
-  properties: {}
+- layout_properties: {column: VJQQOR}
+  name: lbl_race
+  properties: {align: left}
   type: Label
 - layout_properties: {column: YYSHCG}
   name: lbl_time
@@ -30,6 +26,10 @@ components:
 - layout_properties: {column: UKXXVT}
   name: lbl_date
   properties: {align: left}
+  type: Label
+- layout_properties: {column: OJLQEN}
+  name: lbl_placement
+  properties: {}
   type: Label
 container: {type: DataRowPanel}
 is_package: true
