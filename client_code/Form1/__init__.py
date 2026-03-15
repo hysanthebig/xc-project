@@ -15,7 +15,6 @@ class Form1(Form1Template):
     self.init_components(**properties)
     self.data_grid_1.role = 'wide'
 
-   
 #############################################Filter UI##############################################
     self.runner_checkbox = []
     self.race_checkbox = []

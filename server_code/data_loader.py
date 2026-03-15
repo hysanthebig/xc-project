@@ -16,14 +16,18 @@ import pandas as pd
 # def say_hello(name):
 #   print("Hello, " + name + "!")
 #   return 42
+pd.set_option('display.max_columns',None)
+pd.set_option('display.width',None)
+pd.set_option('display.max_rows',None)
+
 @anvil.server.callable
 def import_csf_to_table():
   with anvil.files.data_files.open("track_data.csv") as f:
     df = pd.read_csv(f)
-
+  print(df.head)
   for _, row in df.iterrows():
     row= {k:(None if pd.isna(v) else v) for k,v in row.items()}
+    if row = app_tables.track_table.search(Runner=row["Runner"])
     app_tables.track_table.add_row(
-      Runner=row["Runner"],Race=row["Race"],Placement=row["Placement"],Grade=row["Grade"],Time=row["Time"],Avr_splits=row["Avr splits"],Date=row["Date"],Length=row["Length"],Date_dt=row["Date_dt"],time_seconds=row["time_seconds"])
+      Runner=row["Runner"],Race=row["Race"],Placement=row["Placement"],Grade=row["Grade"],Time=row["Time"],Avr_splits=row["Avr splits"],Date=row["Date"],Length=row["Distance"],RaceType = row["RaceType"],Date_dt=row["Date_dt"],time_seconds=row["time_seconds"])
   return "Done"
-  
