@@ -12,7 +12,9 @@ class RowTemplate2(RowTemplate2Template):
     self.init_components(**properties)
 
     if hasattr(self, "item") and self.item:
-      self.lbl_runner.text = str(self.item.get('Runner', ''))
+      name = str(self.item.get('Runner', ''))
+      if nam
+      self.lbl_runner.text = name
       self.lbl_race.text = str(self.item.get('Race', ''))
       self.lbl_grade.text = str(self.item.get('Grade', ''))
       self.lbl_placement.text = str(self.item.get('Placement', ''))
