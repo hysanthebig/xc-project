@@ -49,7 +49,7 @@ db_schema:
       type: string
     server: full
     title: Files
-  table_3:
+  track_table:
     client: none
     columns: []
     server: full
