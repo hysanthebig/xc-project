@@ -43,15 +43,17 @@ class Form1(Form1Template):
     self.drop_down_1.items = [("Search",0),("PR",1),("Plot",2),("Average Times",3),("Optimal Varisty Lineup (just for fun)",4),("Race Comparison(in progress)",5)]
 
   def __init__(self, **properties):
+    global sport
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     self.data_grid_1.role = 'wide'
-
+    sport = "XC"
     self.load_data("XC")
 
 
   @handle("sport_selector", "change")
   def sport_selector_change(self, **event_args):
+    global sport
     self.flow_panel_runner.clear()
     self.flow_panel_grade.clear()
     self.flow_panel_races.clear()
@@ -59,10 +61,10 @@ class Form1(Form1Template):
       
     if self.sport_selector.selected_value == "XC":
       self.load_data("XC")
-      anvil.server.call('data_selector',"XC")
+      sport = "XC"
     if self.sport_selector.selected_value == "Track":
       self.load_data("Track")
-      anvil.server.call('data_selector',"Track")
+      sport = "Track"
   
 
     # Any code you write here will run before the form opens.
@@ -73,7 +75,7 @@ class Form1(Form1Template):
     selected_grades = [checkmark_grade.text for checkmark_grade in self.grade_checkbox if checkmark_grade.checked]
     selected_lengths = [checkmark_length.text for checkmark_length in self.length_checkbox if checkmark_length.checked]
     sort_by = self.sorting_picker.selected_value
-    filtered_df = anvil.server.call('filter',sort_by,selected_runners,selected_races,selected_grades,selected_lengths)
+    filtered_df = anvil.server.call('filter',sport,sort_by,selected_runners,selected_races,selected_grades,selected_lengths)
     self.repeating_panel_1.items = filtered_df
 
 
@@ -81,7 +83,7 @@ class Form1(Form1Template):
     selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked]
     selected_lengths = [checkmark_length.text for checkmark_length in self.length_checkbox if checkmark_length.checked]
     selected_grades = [checkmark_grade.text for checkmark_grade in self.grade_checkbox if checkmark_grade.checked]
-    self.repeating_panel_1.items = anvil.server.call("pr_display",selected_runners,selected_lengths,selected_grades)
+    self.repeating_panel_1.items = anvil.server.call("pr_display",sport,selected_runners,selected_lengths,selected_grades)
 
   def graphing_module_display(self):
     selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked]
@@ -97,7 +99,7 @@ class Form1(Form1Template):
     if isinstance(races_to_check,int) is False:
       self.text_display_1.text = "Please input only digits"
       return
-    top7,jvnext7 = anvil.server.call('optimal_varisity_lineup',selected_runners,races_to_check,selected_races)
+    top7,jvnext7 = anvil.server.call('optimal_varisity_lineup',sport,selected_runners,races_to_check,selected_races)
     for runner,averaged_time in top7:
       test1 = f"{runner} ran an average of {averaged_time}"
       text_display_made = TextBox(text = test1)
@@ -118,7 +120,7 @@ class Form1(Form1Template):
   def comparison_between_races_display(self):
     selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked is True]
     selected_races = [checkmark_race.text for checkmark_race in self.race_checkbox if checkmark_race.checked is True]
-    time_difference,days_between_races,average_gain= anvil.server.call('comparison_between_races',selected_runners,selected_races,None)
+    time_difference,days_between_races,average_gain= anvil.server.call('comparison_between_races',sport,selected_runners,selected_races,None)
     if time_difference is None:
       self.text_display_1.text = "Either too many selected races, or too few, Please only select 2 races total"
     else:

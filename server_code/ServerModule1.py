@@ -93,11 +93,12 @@ def one_of_item(sport):
   return(one_runner,one_race, one_grade,one_length)
 
 @anvil.server.callable
-def filter(sort_by,runnerlist,racelist,gradelist,lengthlist):
+def filter(sport,sort_by,runnerlist,racelist,gradelist,lengthlist):
 
   if sport == "XC":
     df = xc_df
   if sport == "Track":
+    df = track_df
     
   readmask = pd.Series(True, index=df.index)
   runner_mask = pd.Series(False, index=df.index)
@@ -141,9 +142,10 @@ def filter(sort_by,runnerlist,racelist,gradelist,lengthlist):
   return(df_filtered)
 
 @anvil.server.callable
-def pr_display(runnerlist,lengthlist,gradelist):
+def pr_display(sport,runnerlist,lengthlist,gradelist):
+
   filitered_df = filter("Runner",runnerlist,[],gradelist,lengthlist)
-  df_pr = table_into_df(filitered_df)
+  df_pr = table_into_df(filitered_df,sport)
   df_pr = df_pr.sort_values(by = ["time_seconds"])
   pr_df = df_pr.groupby("Runner")['time_seconds'].min().copy()
   pr_rows = df_pr[df_pr["time_seconds"] == df_pr["Runner"].map(pr_df)]
@@ -153,6 +155,7 @@ def pr_display(runnerlist,lengthlist,gradelist):
 
 @anvil.server.callable
 def graphing_module(runnerlist,gradelist,lengthlist):
+  
   filitered_df = filter("Runner",runnerlist,[],gradelist,lengthlist)
   filitered_df = table_into_df(filitered_df)
   filitered_df = filitered_df.drop(columns =['Race','Placement'])
@@ -180,7 +183,13 @@ def graphing_module(runnerlist,gradelist,lengthlist):
   return plot
   
 @anvil.server.callable
-def average_time(runners,last_races_to_check,races_included):
+def average_time(sport,runners,last_races_to_check,races_included):
+
+  if sport == "XC":
+    df = xc_df
+  if sport == "Track":
+    df = track_df
+    
   average_collected_time = {}
   df = filter("Date_dt",runners,races_included,[],[])
   df = table_into_df(df)
@@ -194,8 +203,8 @@ def average_time(runners,last_races_to_check,races_included):
   return average_collected_time,return_amount_of_races
 
 @anvil.server.callable
-def optimal_varisity_lineup(runner,races_to_check,races):
-  average_times,x = average_time(runner,races_to_check,races)
+def optimal_varisity_lineup(sport,runner,races_to_check,races):
+  average_times,x = average_time(sport,runner,races_to_check,races)
   average_times = sorted(average_times, key = lambda x: time_to_seconds(x[1]))
   top7 = average_times[:7]
   jvnext7 = average_times[7:14]
@@ -224,7 +233,13 @@ def comparison_between_races(runner,races,optional_df):
 
 #####################################test_race_prediction_code
 @anvil.server.callable
-def race_prediction(runner,racelist):
+def race_prediction(sport,runner,racelist):
+  
+  if sport == "XC":
+    df = xc_df
+  if sport == "Track":
+    df = track_df
+    
   df = filter("Time",runner,racelist,[],[])
   df = table_into_df(df)
   future_date ='11/06/2025'
