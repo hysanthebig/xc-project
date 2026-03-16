@@ -90,7 +90,7 @@ class Form1(Form1Template):
     selected_grades = [checkmark_grade.text for checkmark_grade in self.grade_checkbox if checkmark_grade.checked]
     selected_lengths = [checkmark_length.text for checkmark_length in self.length_checkbox if checkmark_length.checked]
     self.data_grid_1.visible = False
-    self.plot_1.figure = anvil.server.call('graphing_module',selected_runners,selected_grades,selected_lengths)
+    self.plot_1.figure = anvil.server.call('graphing_module',sport,selected_runners,selected_grades,selected_lengths)
     
   def optimal_varisty_team_display(self):
     selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox]
@@ -164,7 +164,7 @@ class Form1(Form1Template):
     selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked]
     if len(selected_runners) == 0:
       selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked is False]
-    list_averaged_times,race_amount= anvil.server.call("average_time",selected_runners,latest_races_to_check,un_selected_races)
+    list_averaged_times,race_amount= anvil.server.call("average_time",sport,selected_runners,latest_races_to_check,un_selected_races)
 
     for runner,averaged_time in list_averaged_times:
       test1 = f"{runner} ran an average of {averaged_time}, across {race_amount} races"

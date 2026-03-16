@@ -23,7 +23,7 @@ import numpy as np
 df = None
 xc_df = None
 track_df = None
-
+print("text")
 def tabler(rows):
   data_list = []
   for r in rows:
@@ -44,6 +44,7 @@ def tabler(rows):
 
 @anvil.server.callable
 def table_into_df(sport):
+  print(sport)
   if sport == "XC":
     rows = app_tables.datatable.search()
   if sport == "Track":
@@ -158,10 +159,10 @@ def pr_display(sport,runnerlist,lengthlist,gradelist):
 
 
 @anvil.server.callable
-def graphing_module(runnerlist,gradelist,lengthlist):
+def graphing_module(sport,runnerlist,gradelist,lengthlist):
   
-  filitered_df = filter("Runner",runnerlist,[],gradelist,lengthlist)
-  filitered_df = table_into_df(filitered_df)
+  filitered_df = filter(sport,"Runner",runnerlist,[],gradelist,lengthlist)
+  filitered_df = tabler(filitered_df)
   filitered_df = filitered_df.drop(columns =['Race','Placement'])
   grouped = filitered_df.groupby("Runner")
   plot = go.Figure()
@@ -192,11 +193,11 @@ def average_time(sport,runners,last_races_to_check,races_included):
   if sport == "XC":
     df = xc_df
   if sport == "Track":
-    df = track_df
+
     
   average_collected_time = {}
-  df = filter("Date_dt",runners,races_included,[],[])
-  df = table_into_df(df)
+  df = filter(sport,"Date_dt",runners,races_included,[],[])
+  df = tabler(df)
   for runner,df in df.groupby('Runner'):
     if average_time_helper(df,last_races_to_check) is not None:
       average_collected_time[runner] = average_time_helper(df,last_races_to_check)
@@ -218,7 +219,7 @@ def optimal_varisity_lineup(sport,runner,races_to_check,races):
 def comparison_between_races(runner,races,optional_df):
   if optional_df is None:
     df = filter("Date_dt",runner,races,[],[])
-    df = table_into_df(df)
+    df = tabler(df)
   else:
     df = optional_df
   if df.shape[0] != 2:
@@ -245,7 +246,7 @@ def race_prediction(sport,runner,racelist):
     df = track_df
     
   df = filter("Time",runner,racelist,[],[])
-  df = table_into_df(df)
+  df = tabler(df)
   future_date ='11/06/2025'
   df["Date_dt"] = pd.to_datetime(df["Date_dt"])
   first_date = df["Date_dt"].min()
