@@ -23,6 +23,7 @@ import numpy as np
 df = None
 xc_df = None
 track_df = None
+
 def tabler(rows):
   data_list = []
   for r in rows:
@@ -39,7 +40,7 @@ def tabler(rows):
       "Avr_splits":r['Avr_splits']
     })
     df = pd.DataFrame(data_list)
-  return df
+    return df
 
 @anvil.server.callable
 def table_into_df(sport):
