@@ -39,8 +39,8 @@ def tabler(rows):
       "Length":r["Length"],
       "Avr_splits":r['Avr_splits']
     })
-    df = pd.DataFrame(data_list)
-    return df
+  df = pd.DataFrame(data_list)
+  return df
 
 @anvil.server.callable
 def table_into_df(sport):
