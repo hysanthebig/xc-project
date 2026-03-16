@@ -32,19 +32,4 @@ def import_csf_to_table():
       app_tables.track_table.add_row(
         Runner=row["Runner"],Race=row["Race"],Placement=row["Placement"],Grade=row["Grade"],Time=row["Time"],Avr_splits=row["Avr splits"],Date=row["Date"],Length=row["Distance"],RaceType = row["RaceType"],Date_dt=row["Date_dt"],time_seconds=row["time_seconds"])
   return "Done"
-
-def sort_table_by_first_name_inplace(table, data_grid):
-  rows = list(table.search())
-  rows_with_first = []
-  for row in rows:
-    runner = row.get('Runner', '')
-    if "," in runner:
-      last, first = runner.split(",", 1)
-      runner = f"{first.strip()} {last.strip()}"
-    first_name = runner.split()[0] if runner else ""
-    rows_with_first.append((row, first_name))
-  rows_with_first.sort(key=lambda x: x[1].lower())
-  data_grid.items = [row for row, _ in rows_with_first]
-  return "DataGrid updated by first name"
-
-  sort_table_by_first_name_inplace(app_tables.track_table)
+  
