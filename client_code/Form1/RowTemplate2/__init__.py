@@ -14,10 +14,12 @@ class RowTemplate2(RowTemplate2Template):
     if hasattr(self, "item") and self.item:
       name = str(self.item.get('Runner', ''))
       names = name.split(" ")
-      print(names)
-      first_name = names[1]
-      last_name = names[0]
-      self.lbl_runner.text = f"{first_name[:1]}. {last_name}"
+      first_name = names[0]
+      last_name = names[1]
+      if "," in name:
+        self.lbl_runner.text = f"{last_name[:1]}. {first_name}"
+      else:
+        self.lbl_runner.text = f"{first_name[:1]}. {last_name}"
       self.lbl_race.text = str(self.item.get('Race', ''))
       self.lbl_grade.text = str(self.item.get('Grade', ''))
       self.lbl_placement.text = str(self.item.get('Placement', ''))
