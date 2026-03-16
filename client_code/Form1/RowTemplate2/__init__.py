@@ -15,7 +15,7 @@ class RowTemplate2(RowTemplate2Template):
       name = str(self.item.get('Runner', ''))
       names = name.split(" ")
       first_name = names[0]
-      last_name = names[1]
+      last_name = names[-1]
       if "," in name:
         self.lbl_runner.text = f"{last_name[:1]}. {first_name}"
       else:

@@ -30,6 +30,7 @@ def import_csf_to_table():
     exists = app_tables.track_table.search(Runner=row["Runner"],Race=row["Race"],RaceType=row["RaceType"])
     if not list(exists):
       app_tables.track_table.add_row(
-        Runner=row["Runner"],Race=row["Race"],Placement=row["Placement"],Grade=row["Grade"],Time=row["Time"],Avr_splits=row["Avr splits"],Date=row["Date"],Length=row["Distance"],RaceType = row["RaceType"],Date_dt=row["Date_dt"],time_seconds=row["time_seconds"])
+        Runner=row["Runner"],Race=row["Race"],Placement=row["Placement"],Grade=row["Grade"],Time=row["Time"],Avr_splits=row["Avr splits"],Date=row["Date"],Length=row["Length"],RaceType = row["RaceType"],Date_dt=row["Date_dt"],time_seconds=row["time_seconds"])
   return "Done"
-  
+
+
