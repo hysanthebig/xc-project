@@ -28,18 +28,18 @@ def tabler(rows):
   for r in rows:
     data_list.append({
      "Runner": r["Runner"],
-    "Race": r["Race"],
-    "Grade": r["Grade"],
-    "Placement":r["Placement"],
-    "Date":r["Date"],
-    "Date_dt":r["Date_dt"],
-    "Time":r["Time"],
-    "time_seconds":r["time_seconds"],
-    "Length":r["Length"],
-    "Avr_splits":r['Avr_splits']
-  })
-  df = pd.DataFrame(data_list)
-return df
+     "Race": r["Race"],
+      "Grade": r["Grade"],
+      "Placement":r["Placement"],
+      "Date":r["Date"],
+      "Date_dt":r["Date_dt"],
+      "Time":r["Time"],
+      "time_seconds":r["time_seconds"],
+      "Length":r["Length"],
+      "Avr_splits":r['Avr_splits']
+    })
+    df = pd.DataFrame(data_list)
+  return df
 
 @anvil.server.callable
 def table_into_df(sport):
@@ -47,8 +47,7 @@ def table_into_df(sport):
     rows = app_tables.datatable.search()
   if sport == "Track":
     rows = app_tables.track_table.search()
-
-  
+  return tabler(rows)
 
 xc_df = table_into_df("XC")
 track_df = table_into_df("Track")
@@ -149,7 +148,7 @@ def filter(sport,sort_by,runnerlist,racelist,gradelist,lengthlist):
 def pr_display(sport,runnerlist,lengthlist,gradelist):
 
   filitered_df = filter(sport,"Runner",runnerlist,[],gradelist,lengthlist)
-  df_pr = table_into_df(filitered_df)
+  df_pr = tabler(filitered_df)
   df_pr = df_pr.sort_values(by = ["time_seconds"])
   pr_df = df_pr.groupby("Runner")['time_seconds'].min().copy()
   pr_rows = df_pr[df_pr["time_seconds"] == df_pr["Runner"].map(pr_df)]
