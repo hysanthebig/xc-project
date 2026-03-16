@@ -190,10 +190,6 @@ def graphing_module(sport,runnerlist,gradelist,lengthlist):
 @anvil.server.callable
 def average_time(sport,runners,last_races_to_check,races_included):
 
-  if sport == "XC":
-    df = xc_df
-  if sport == "Track":
-
     
   average_collected_time = {}
   df = filter(sport,"Date_dt",runners,races_included,[],[])
@@ -216,9 +212,9 @@ def optimal_varisity_lineup(sport,runner,races_to_check,races):
   return top7,jvnext7
 
 @anvil.server.callable
-def comparison_between_races(runner,races,optional_df):
+def comparison_between_races(sport,runner,races,optional_df):
   if optional_df is None:
-    df = filter("Date_dt",runner,races,[],[])
+    df = filter(sport,"Date_dt",runner,races,[],[])
     df = tabler(df)
   else:
     df = optional_df
