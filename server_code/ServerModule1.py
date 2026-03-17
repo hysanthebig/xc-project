@@ -44,15 +44,9 @@ def tabler(rows):
 
 @anvil.server.callable
 def table_into_df(sport):
-  print(sport)
-  if sport == "XC":
-    rows = app_tables.datatable.search()
-  if sport == "Track":
-    rows = app_tables.track_table.search()
-  return tabler(rows)
-
-xc_df = table_into_df("XC")
-track_df = table_into_df("Track")
+  xcdf = tabler(app_tables.datatable.search())
+  trackdf = tabler(app_tables.track_table.search())
+  return xcdf,trackdf
     
 def seconds_to_mintunes(seconds):
   mint = int(seconds // 60)
@@ -85,12 +79,9 @@ def average_time_helper(df_runner,last_races_to_check):
 
 
 @anvil.server.callable
-def one_of_item(sport):
+def one_of_item(data):
   #############################Returns a list of single items, no repeats
-  if sport == "XC":
-    rows = app_tables.datatable.search()
-  if sport == "Track":
-    rows = app_tables.track_table.search()
+  rows = data
   one_runner = sorted(set(row['Runner'] for row in rows))
   one_race = sorted(set(row['Race'] for row in rows))
   one_grade =sorted(set(row['Grade']for row in rows))
@@ -98,12 +89,9 @@ def one_of_item(sport):
   return(one_runner,one_race, one_grade,one_length)
 
 @anvil.server.callable
-def filter(sport,sort_by,runnerlist,racelist,gradelist,lengthlist):
+def filter(data,sort_by,runnerlist,racelist,gradelist,lengthlist):
 
-  if sport == "XC":
-    df = xc_df
-  if sport == "Track":
-    df = track_df
+  df = data
     
   readmask = pd.Series(True, index=df.index)
   runner_mask = pd.Series(False, index=df.index)

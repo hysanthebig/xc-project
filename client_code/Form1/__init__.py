@@ -15,7 +15,7 @@ class Form1(Form1Template):
     self.race_checkbox = []
     self.grade_checkbox = []
     self.length_checkbox = []
-    total_runner,total_races,total_grades,total_lengths = anvil.server.call('one_of_item',sport)  
+    total_runner,total_races,total_grades,total_lengths = anvil.server.call('one_of_item',data)  
     checkmark_all = CheckBox(text='All Runners',checked=True)
     self.flow_panel_runner.add_component(checkmark_all)
 
@@ -44,11 +44,16 @@ class Form1(Form1Template):
 
   def __init__(self, **properties):
     global sport
+    global xcdf
+    global trackdf
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     self.data_grid_1.role = 'wide'
     sport = "XC"
-    self.load_data("XC")
+    xcdf,trackdf = anvil.server.call("table_into_df")
+    if sport = ""
+    self.load_data(data)
+    
 
 
   @handle("sport_selector", "change")
@@ -75,7 +80,11 @@ class Form1(Form1Template):
     selected_grades = [checkmark_grade.text for checkmark_grade in self.grade_checkbox if checkmark_grade.checked]
     selected_lengths = [checkmark_length.text for checkmark_length in self.length_checkbox if checkmark_length.checked]
     sort_by = self.sorting_picker.selected_value
-    filtered_df = anvil.server.call('filter',sport,sort_by,selected_runners,selected_races,selected_grades,selected_lengths)
+    if sport == "XC":
+      data=xcdf
+    if sport == "Track":
+      data = trackdf
+    filtered_df = anvil.server.call('filter',data,sort_by,selected_runners,selected_races,selected_grades,selected_lengths)
     self.repeating_panel_1.items = filtered_df
 
 
