@@ -43,7 +43,7 @@ def tabler(rows):
   return df
 
 @anvil.server.callable
-def table_into_df(sport):
+def table_into_df():
   xcdf = tabler(app_tables.datatable.search())
   trackdf = tabler(app_tables.track_table.search())
   return xcdf,trackdf

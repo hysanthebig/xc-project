@@ -10,7 +10,7 @@ from anvil import CheckBox
 
 class Form1(Form1Template):
 
-  def load_data(self,sport):
+  def load_data(self,data):
     self.runner_checkbox = []
     self.race_checkbox = []
     self.grade_checkbox = []
@@ -51,7 +51,10 @@ class Form1(Form1Template):
     self.data_grid_1.role = 'wide'
     sport = "XC"
     xcdf,trackdf = anvil.server.call("table_into_df")
-    if sport = ""
+    if sport == "XC":
+      data=xcdf
+    if sport == "Track":
+      data = trackdf
     self.load_data(data)
     
 
