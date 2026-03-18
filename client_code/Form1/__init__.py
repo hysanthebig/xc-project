@@ -90,7 +90,7 @@ class Form1(Form1Template):
     selected_grades = [checkmark_grade.text for checkmark_grade in self.grade_checkbox if checkmark_grade.checked]
     selected_lengths = [checkmark_length.text for checkmark_length in self.length_checkbox if checkmark_length.checked]
     self.data_grid_1.visible = False
-    self.plot_1.figure = anvil.server.call('graphing_module',selected_runners,selected_grades,selected_lengths)
+    self.plot_1.figure = anvil.server.call('graphing_module',sport,selected_runners,selected_grades,selected_lengths)
     
   def optimal_varisty_team_display(self):
     selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox]

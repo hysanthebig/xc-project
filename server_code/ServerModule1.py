@@ -158,10 +158,10 @@ def pr_display(sport,runnerlist,lengthlist,gradelist):
 
 
 @anvil.server.callable
-def graphing_module(runnerlist,gradelist,lengthlist):
+def graphing_module(sport,runnerlist,gradelist,lengthlist):
   
-  filitered_df = filter("Runner",runnerlist,[],gradelist,lengthlist)
-  filitered_df = table_into_df(filitered_df)
+  filitered_df = filter(sport,"Runner",runnerlist,[],gradelist,lengthlist)
+  filitered_df = tabler(filitered_df)
   filitered_df = filitered_df.drop(columns =['Race','Placement'])
   grouped = filitered_df.groupby("Runner")
   plot = go.Figure()
