@@ -34,4 +34,3 @@ def import_csf_to_table():
   return "Done"
 
 
-import_csf_to_table()

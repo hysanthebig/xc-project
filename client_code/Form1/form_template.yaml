@@ -60,7 +60,7 @@ components:
     name: sport_selector
     properties:
       foreground: theme:White
-      items: [XC, Track]
+      items: [Track, XC]
     type: DropDown
   layout_properties: {slot: title}
   name: column_panel_1
