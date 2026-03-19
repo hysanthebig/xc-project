@@ -47,8 +47,8 @@ class Form1(Form1Template):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     self.data_grid_1.role = 'wide'
-    sport = "XC"
-    self.load_data("XC")
+    sport = "Track"
+    self.load_data(sport)
 
 
   @handle("sport_selector", "change")
