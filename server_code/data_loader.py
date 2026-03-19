@@ -32,3 +32,4 @@ def import_csf_to_table():
       app_tables.track_table.add_row(
         Runner=row["Runner"],Race=row["Race"],Placement=row["Placement"],Grade=row["Grade"],Time=row["Time"],Avr_splits=row["Avr splits"],Date=row["Date"],Length=row["Length"],RaceType = row["RaceType"],Date_dt=row["Date_dt"],time_seconds=row["time_seconds"])
   return "Done"
+
