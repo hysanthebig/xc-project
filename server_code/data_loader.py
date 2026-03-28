@@ -24,13 +24,13 @@ pd.set_option('display.max_rows',None)
 def import_csf_to_table():
   with anvil.files.data_files.open("track_data.csv") as f:
     df = pd.read_csv(f)
-  print(df.head)
+  print("DF Located")
   for _, row in df.iterrows():
     row= {k:(None if pd.isna(v) else v) for k,v in row.items()}
     exists = app_tables.track_table.search(Runner=row["Runner"],Race=row["Race"],RaceType=row["RaceType"],Time=row["Time"])
     if not list(exists):
       app_tables.track_table.add_row(
         Runner=row["Runner"],Race=row["Race"],Placement=row["Placement"],Grade=row["Grade"],Time=row["Time"],Avr_splits=row["Avr splits"],Date=row["Date"],Length=row["Length"],RaceType = row["RaceType"],Date_dt=row["Date_dt"],time_seconds=row["time_seconds"])
+  print("Completed")
   return "Done"
-
-
+import_csf_to_table()
