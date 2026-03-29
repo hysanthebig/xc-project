@@ -142,7 +142,7 @@ def format_for_csv(df_school, race_distance_meters=1600):
     df["Date"] = MEET_DATE
     df["Sport"] = SPORT
     df["Avr splits"] = df["Time"].apply(lambda t: avg_split(t, race_distance_meters))
-    df["Date_dt"] = pd.to_datetime(df["Date"])
+    df["Date_dt"] = pd.to_datetime(df["Date"]).dt.date
     df["time_seconds"] = df["Time"].apply(time_to_seconds)
 
     # Reorder columns
@@ -162,7 +162,7 @@ def main():
     df_final = df_full[df_full["Length"].str.contains("800|1600|3200", na=False)]
     df_final["Date_dt"] = df_final['Date_dt'].dt.strftime("%Y-%M-%D")
 
-    print(df_final)
+    
     
 
     confirm = 'y'
