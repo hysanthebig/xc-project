@@ -166,5 +166,3 @@ def main():
           print("Saved.")
     else:
         print("Aborted.")
-
-main()
