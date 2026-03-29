@@ -25,8 +25,8 @@ from datetime import datetime
 
 # ================= CONFIG =================
 URL = "https://files.finishedresults.com/Track2026/Meets/13770-Colony-vs-Alta-Loma.html"
-CSV_PATH = "/storage/emulated/0/pythondata/track_data.csv"
 SCHOOL_NAME = "colony"  # case-insensitive
+table = app_tables.track_table
 SPORT = "Track"
 MEET_NAME = "Colony Vs Alta Loma"
 MEET_DATE = "3/26/2026"
@@ -160,19 +160,22 @@ def main():
     df_school = compute_school_placement(df_full, SCHOOL_NAME)
     df_full = format_for_csv(df_school)
     df_final = df_full[df_full["Length"].str.contains("800|1600|3200", na=False)]
+    df_final["Date_dt"] = df_final['Date_dt'].dt.strftime("%Y-%M-%D")
 
     print(df_final)
     
 
-    confirm = input("Save results? (y/n): ").lower()
+    confirm = 'y'
     if confirm == "y":
-        try:
-            df_target = pd.read_csv(CSV_PATH)
-            df_target = pd.concat([df_target, df_final], ignore_index=True)
-        except FileNotFoundError:
-            df_target = df_final
-        df_target.to_csv(CSV_PATH, index=False)
-        print("Saved.")
+          for _, row in df_final.iterrows():
+            row= {k:(None if pd.isna(v) else v) for k,v in row.items()}
+            exists = table.search(Runner=row["Runner"],Race=row["Race"],RaceType=row["RaceType"],Time=row["Time"])
+            if not list(exists):
+              print(row)
+              table.add_row(Runner=row["Runner"],Race=row["Race"],Placement=row["Placement"],Grade=row["Grade"],Time=row["Time"],Avr_splits=row["Avr splits"],Date=row["Date"],Length=row["Length"],RaceType = row["RaceType"],Date_dt=row["Date_dt"],time_seconds=row["time_seconds"])
+
+          print("Saved.")
     else:
         print("Aborted.")
 
+main()
