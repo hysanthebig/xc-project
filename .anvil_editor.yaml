@@ -12,6 +12,6 @@ unique_ids:
   modules: {}
   scripts: {}
   server_modules:
-    csf_less_dataloader: '1774811423826206864959648.21683'
-    data_loader: '177049263890613537740944.748577'
+    csv_data_loader: '177049263890613537740944.748577'
+    csv_less_dataloader: '1774811423826206864959648.21683'
     main: '177049155527851378650300.85975'

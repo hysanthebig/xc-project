@@ -4,19 +4,6 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
-
-# This is a server module. It runs on the Anvil server,
-# rather than in the user's browser.
-#
-# To allow anvil.server.call() to call functions here, we mark
-# them with @anvil.server.callable.
-# Here is an example - you can replace it with your own:
-#
-# @anvil.server.callable
-# def say_hello(name):
-#   print("Hello, " + name + "!")
-#   return 42
-#
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -143,7 +130,6 @@ def format_for_csv(df_school, race_distance_meters=1600):
     df["Sport"] = SPORT
     df["Avr splits"] = df["Time"].apply(lambda t: avg_split(t, race_distance_meters))
     df["Date_dt"] = pd.to_datetime(df["Date"])
-  df["Date_dt"] = df["Date_dt"] =
     df["time_seconds"] = df["Time"].apply(time_to_seconds)
 
     # Reorder columns
@@ -161,7 +147,9 @@ def main():
     df_school = compute_school_placement(df_full, SCHOOL_NAME)
     df_full = format_for_csv(df_school)
     df_final = df_full[df_full["Length"].str.contains("800|1600|3200", na=False)]
-    df_final["Date_dt"] = df_final['Date_dt'].dt.strftime("%Y-%M-%D")
+    df_final["Date_dt"] = df_final['Date_dt'].dt.strftime("%Y-%m-%d")
+    print(df_final)
+
 
     
     
