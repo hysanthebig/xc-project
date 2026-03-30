@@ -26,6 +26,7 @@ xc_df = None
 track_df = None
 
 def tabler(rows):
+  print(rows)
   data_list = []
   for r in rows:
     data_list.append({
