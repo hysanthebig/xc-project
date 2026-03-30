@@ -7,6 +7,7 @@ import anvil.server
 import pandas as pd
 import plotly.graph_objects as go
 import numpy as np
+import time
 # This is a server module. It runs on the Anvil server,
 # rather than in the user's browser.
 #
@@ -19,7 +20,7 @@ import numpy as np
 #   print("Hello, " + name + "!")
 #   return 42
 #
-
+start = time.time()
 df = None
 xc_df = None
 track_df = None
@@ -40,6 +41,10 @@ def tabler(rows):
       "Avr_splits":r['Avr_splits']
     })
   df = pd.DataFrame(data_list)
+
+  end = time.time()
+  print(f"tabler {end-start:.4f}")
+
   return df
 
 @anvil.server.callable
@@ -143,6 +148,11 @@ def filter(sport,sort_by,runnerlist,racelist,gradelist,lengthlist):
   df_filtered = df.loc[readmask]
   df_filtered = df_filtered.sort_values(by=[sort_by])
   df_filtered =df_filtered.to_dict(orient="records")
+
+
+  end = time.time()
+  print(f"filter {end-start:.4f}")
+
   return(df_filtered)
 
 @anvil.server.callable
@@ -278,3 +288,6 @@ def race_prediction(sport,runner,racelist):
   t2 = int(latest_time)+int(average_time_2)
   print(f"Latest: {seconds_to_mintunes(t2)}")
   print(f"Averaged: {seconds_to_mintunes(t1)}")
+
+end = time.time()
+print(f"end time {end-start:.4f}")

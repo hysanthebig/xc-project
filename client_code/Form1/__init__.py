@@ -6,7 +6,9 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
 from anvil import CheckBox
+import time
 
+start = time.time()
 
 class Form1(Form1Template):
 
@@ -70,13 +72,22 @@ class Form1(Form1Template):
     # Any code you write here will run before the form opens.
 
   def main_data_display(self):
+    start = time.time()
     selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked]
     selected_races = [checkmark_race.text for checkmark_race in self.race_checkbox if checkmark_race.checked]
     selected_grades = [checkmark_grade.text for checkmark_grade in self.grade_checkbox if checkmark_grade.checked]
     selected_lengths = [checkmark_length.text for checkmark_length in self.length_checkbox if checkmark_length.checked]
+    endt = time.time()
+    print(f"{endt-start:.4f}")
     sort_by = self.sorting_picker.selected_value
+    endt = time.time()
+    print(f"{endt-start:.4f}")
     filtered_df = anvil.server.call('filter',sport,sort_by,selected_runners,selected_races,selected_grades,selected_lengths)
+    endt = time.time()
+    print(f"{endt-start:.4f}")
     self.repeating_panel_1.items = filtered_df
+    end = time.time()
+    print(f"{end-start:.4f}")
 
 
   def pr_screen_display(self):
@@ -242,3 +253,5 @@ class Form1(Form1Template):
   def button_1_click(self, **event_args):
     self.uncheck_all()
 
+end = time.time()
+print(f"{end-start:.4f}")
