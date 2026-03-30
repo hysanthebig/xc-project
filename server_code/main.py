@@ -102,6 +102,7 @@ def one_of_item(sport):
 def filter(sport,sort_by,runnerlist,racelist,gradelist,lengthlist):
   start = time.time()
   df = table_into_df(sport)
+  print(lengthlist)
     
   readmask = pd.Series(True, index=df.index)
   runner_mask = pd.Series(False, index=df.index)
@@ -125,7 +126,7 @@ def filter(sport,sort_by,runnerlist,racelist,gradelist,lengthlist):
   if len(lengthlist) == 0:
     length_mask = pd.Series(True,index =df.index)
 
-  print(runner_mask)
+  print(length_mask)
   readmask = readmask & runner_mask & race_mask & grade_mask & length_mask
 
   df_filtered = df.loc[readmask]
