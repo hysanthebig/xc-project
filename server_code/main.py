@@ -26,7 +26,6 @@ xc_df = None
 track_df = None
 
 def tabler(rows):
-  print(rows)
   data_list = []
   for r in rows:
     data_list.append({
@@ -54,6 +53,7 @@ def table_into_df(sport):
     rows = app_tables.datatable.search()
   if sport == "Track":
     rows = app_tables.track_table.search()
+  print(rows)
   return tabler(rows)
     
 def seconds_to_mintunes(seconds):
@@ -103,7 +103,7 @@ def one_of_item(sport):
 def filter(sport,sort_by,runnerlist,racelist,gradelist,lengthlist):
   start = time.time()
   df = table_into_df(sport)
-  print(lengthlist)
+
     
   readmask = pd.Series(True, index=df.index)
   runner_mask = pd.Series(False, index=df.index)
