@@ -97,6 +97,7 @@ def parse_html(html):
         "Length": current_distance
       })
 
+
   df = pd.DataFrame(records)
   def flip_name(name):
     if "," in name:
