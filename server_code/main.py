@@ -195,7 +195,7 @@ def average_time(sport,runners,last_races_to_check,races_included):
     df = track_df
     
   average_collected_time = {}
-  df = filter("Date_dt",runners,races_included,[],[])
+  df = filter("Date_dt",sport,runners,races_included,[],[])
   df = table_into_df(df)
   for runner,df in df.groupby('Runner'):
     if average_time_helper(df,last_races_to_check) is not None:
