@@ -174,7 +174,7 @@ class Form1(Form1Template):
     un_selected_races = [checkmark_race.text for checkmark_race in self.race_checkbox if checkmark_race.checked is False]
     selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked]
     if len(selected_runners) == 0:
-      selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox if checkmark_runner.checked is False]
+      selected_runners = [checkmark_runner.text for checkmark_runner in self.runner_checkbox]
     list_averaged_times,race_amount= anvil.server.call("average_time",sport,selected_runners,latest_races_to_check,un_selected_races)
 
     for runner,averaged_time in list_averaged_times:

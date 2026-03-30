@@ -54,9 +54,6 @@ def table_into_df(sport):
   if sport == "Track":
     rows = app_tables.track_table.search()
   return tabler(rows)
-
-xc_df = table_into_df("XC")
-track_df = table_into_df("Track")
     
 def seconds_to_mintunes(seconds):
   mint = int(seconds // 60)
@@ -103,11 +100,8 @@ def one_of_item(sport):
 
 @anvil.server.callable
 def filter(sport,sort_by,runnerlist,racelist,gradelist,lengthlist):
-
-  if sport == "XC":
-    df = xc_df
-  if sport == "Track":
-    df = track_df
+  start = time.time()
+  df = table_into_df(sport)
     
   readmask = pd.Series(True, index=df.index)
   runner_mask = pd.Series(False, index=df.index)
@@ -115,34 +109,23 @@ def filter(sport,sort_by,runnerlist,racelist,gradelist,lengthlist):
   grade_mask = pd.Series(False, index = df.index)
   length_mask = pd.Series(False,index = df.index)
   ####################Filter#######################
-  for runner in runnerlist[0:]:
-    col_data = df["Runner"].astype(str)
-    single_runner_mask = col_data.str.contains(runner.strip(),case = False)
-    runner_mask = runner_mask | single_runner_mask
+  runner_mask = df["Runner"].str.lower().isin([r.lower() for r in racelist])
   if len(runnerlist) == 0:
     runner_mask = pd.Series(True,index =df.index)
 
-  for race in racelist[0:]:
-    col_data = df["Race"].astype(str)
-    single_mask = col_data.str.contains(race.strip(),case = False)
-    race_mask = race_mask | single_mask
+  race_mask = df['Race'].str.lower().isin([r.lower() for r in racelist])
   if len(racelist) == 0:
     race_mask = pd.Series(True,index =df.index)
 
-  for grade in gradelist[0:]:
-    col_data = df["Grade"].astype(str)
-    single_mask = col_data.str.contains(str(grade))
-    grade_mask = grade_mask | single_mask
+  grade_mask = df['Grade'].astype(str).isin([r.lower() for r in gradelist])
   if len(gradelist) == 0:
     grade_mask = pd.Series(True,index =df.index)
 
-  for length in lengthlist[0:]:
-    col_data = df["Length"].astype(str)
-    single_mask = col_data.str.contains(length.strip(),case = False)
-    length_mask = length_mask | single_mask
+  length_mask = df['Length'].str.lower().isin([r.lower() for r in lengthlist])
   if len(lengthlist) == 0:
     length_mask = pd.Series(True,index =df.index)
 
+  print(runner_mask)
   readmask = readmask & runner_mask & race_mask & grade_mask & length_mask
 
   df_filtered = df.loc[readmask]
@@ -198,16 +181,10 @@ def graphing_module(sport,runnerlist,gradelist,lengthlist):
   
 @anvil.server.callable
 def average_time(sport,runners,last_races_to_check,races_included):
-
-  if sport == "XC":
-    df = xc_df
-  if sport == "Track":
-    df = track_df
-    
   average_collected_time = {}
-  df = filter("Date_dt",sport,runners,races_included,[],[])
-  df = table_into_df(df)
-  for runner,df in df.groupby('Runner'):
+  df = filter(sport,"Date_dt",runners,races_included,[],[])
+  df = tabler(df)
+  for runner,df in df.groupby(['Runner']):
     if average_time_helper(df,last_races_to_check) is not None:
       average_collected_time[runner] = average_time_helper(df,last_races_to_check)
   if last_races_to_check == 0:
@@ -255,7 +232,7 @@ def race_prediction(sport,runner,racelist):
     df = track_df
     
   df = filter("Time",runner,racelist,[],[])
-  df = table_into_df(df)
+  df = tabler(df)
   future_date ='11/06/2025'
   df["Date_dt"] = pd.to_datetime(df["Date_dt"])
   first_date = df["Date_dt"].min()
