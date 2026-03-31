@@ -11,7 +11,7 @@ import re
 from datetime import datetime
 
 # ================= CONFIG =================
-URL = "https://files.finishedresults.com/Track2026/Meets/13770-Colony-vs-Alta-Loma.html"
+URL = "https://files.finishedresults.com/Track2026/Meets/13501-45th-Sundevil-Track-Field-Invitational.html"
 SCHOOL_NAME = "colony"  # case-insensitive
 table = app_tables.track_table
 SPORT = "Track"
