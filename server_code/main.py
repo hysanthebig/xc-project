@@ -111,7 +111,7 @@ def filter(sport,sort_by,runnerlist,racelist,gradelist,lengthlist):
   grade_mask = pd.Series(False, index = df.index)
   length_mask = pd.Series(False,index = df.index)
   ####################Filter#######################
-  runner_mask = df["Runner"].str.lower().isin([r.lower() for r in racelist])
+  runner_mask = df["Runner"].str.lower().isin([r.lower() for r in runnerlist])
   if len(runnerlist) == 0:
     runner_mask = pd.Series(True,index =df.index)
 
