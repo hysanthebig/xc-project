@@ -32,4 +32,5 @@ components:
   properties: {align: left}
   type: Label
 container: {type: DataRowPanel}
+custom_component: true
 is_package: true
