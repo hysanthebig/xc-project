@@ -774,7 +774,6 @@ textarea.anvil-component[disabled] {
   padding: 4px 8px;
   background-color: transparent;
 }
-
 .daterangepicker td.active {
   background-color: %color:Primary 500%;
 }
